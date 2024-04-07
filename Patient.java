@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class Patient {
 
-    public static void addPatient(int uid, String firstName, String lastName, String password, String email, String phoneNumber, String dob)
+    public static void addPatient(int uid, String firstName, String lastName, String password, String email, String phoneNumber, String dob, String insuranceProvider, String providerPhone, String policyID, String pharmacyName, String pharmacyPhone, String pharmacyAddress)
 	{
 		try
 		{
@@ -28,7 +28,16 @@ public class Patient {
 			writer.write("Password : " + password + "\n");
 			writer.write("Email : " + email + "\n");
 			writer.write("Phone Number : " + phoneNumber + "\n");
-			writer.write("Date of Birth : " + dob + "\n");
+			writer.write("Date of Birth : " + dob + "\n\n");
+			
+			writer.write("Insurance Provider : " + insuranceProvider + "\n");
+			writer.write("Insurance Provider Phone Number : " + providerPhone + "\n");
+			writer.write("Policy ID : " + policyID + "\n\n");
+
+			writer.write("Pharmacy : " + pharmacyPhone + "\n");
+			writer.write("Pharmacy Phone Number : " + pharmacyPhone + "\n");
+			writer.write("Pharmacy Address : " + pharmacyAddress + "\n");
+
 			writer.close();
 			
 			System.out.println("Patient Created");
@@ -114,6 +123,78 @@ public class Patient {
 		String patientFile = "./" + uid + "/" + uid + "_PatientInformation.txt";
 			
         replaceLine(patientFile, "Password : ", password);
+
+    }
+
+	public static void changePatientEmail(int uid, String email)
+    {
+
+		String patientFile = "./" + uid + "/" + uid + "_PatientInformation.txt";
+			
+        replaceLine(patientFile, "Email : ", email);
+
+    }
+
+	public static void changePatientPhoneNumber(int uid, String phoneNumber)
+    {
+
+		String patientFile = "./" + uid + "/" + uid + "_PatientInformation.txt";
+			
+        replaceLine(patientFile, "Phone Number : ", phoneNumber);
+
+    }
+
+	public static void changePatientInsuranceProvider(int uid, String insuranceProvider)
+    {
+
+		String patientFile = "./" + uid + "/" + uid + "_PatientInformation.txt";
+			
+        replaceLine(patientFile, "Insurance Provider : ", insuranceProvider);
+
+    }
+
+	public static void changePatientInsuranceProviderNumber(int uid, String insuranceProviderNumber)
+    {
+
+		String patientFile = "./" + uid + "/" + uid + "_PatientInformation.txt";
+			
+        replaceLine(patientFile, "Insurance Provider Phone Number : ", insuranceProviderNumber);
+
+    }
+
+	public static void changePatientInsurancePolicyID(int uid, String policyID)
+    {
+
+		String patientFile = "./" + uid + "/" + uid + "_PatientInformation.txt";
+			
+        replaceLine(patientFile, "Policy ID : ", policyID);
+
+    }
+
+	public static void changePatientPharmacy(int uid, String pharmacyName)
+    {
+
+		String patientFile = "./" + uid + "/" + uid + "_PatientInformation.txt";
+			
+        replaceLine(patientFile, "Pharmacy : ", pharmacyName);
+
+    }
+
+	public static void changePatientPharmacyPhoneNumber(int uid, String pharmacyPhoneNumber)
+    {
+
+		String patientFile = "./" + uid + "/" + uid + "_PatientInformation.txt";
+			
+        replaceLine(patientFile, "Pharmacy Phone Number : ", pharmacyPhoneNumber);
+
+    }
+
+	public static void changePatientPharmacyAddress(int uid, String pharmacyAddress)
+    {
+
+		String patientFile = "./" + uid + "/" + uid + "_PatientInformation.txt";
+			
+        replaceLine(patientFile, "Pharmacy Address : ", pharmacyAddress);
 
     }
 }
