@@ -23,6 +23,7 @@ public class Appointment {
     }
 
     public Appointment(String fileName){
+        
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) { //File is ready to be read from 
             String line;
             while ((line = reader.readLine()) != null) {
