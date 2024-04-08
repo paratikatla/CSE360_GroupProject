@@ -7,8 +7,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class SignIn {
-    
-
     public boolean patientSignIn(String uid, String password)
     {
         if(Patient.doesPatientExist(uid))
