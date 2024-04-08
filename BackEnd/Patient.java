@@ -100,10 +100,12 @@ public class Patient
 	}
 
 
-	public void setFullName(String first, String last)
+	public void setFullName(String fullName)
 	{
-		firstName = first;
-		lastName = last;
+		int spaceIndex = fullName.indexOf(' ');
+
+		this.firstName = fullName.substring(0, spaceIndex);
+		this.lastName = fullName.substring(spaceIndex + 1);
 	}
 
 
