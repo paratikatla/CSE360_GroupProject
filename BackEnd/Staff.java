@@ -16,7 +16,76 @@ public class Staff {
     String staffEmail;
     String password;
 
-    public Staff(String employeeID, String role, String firstName, String lastName, String dob, String staffEmail, String password)
+    public String getEmployeeID() {
+        return employeeID;
+    }
+
+    public void setEmployeeID(String employeeID) {
+        this.employeeID = employeeID;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public String getStaffEmail() {
+        return staffEmail;
+    }
+
+    public void setStaffEmail(String staffEmail) {
+        this.staffEmail = staffEmail;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFullName()
+	{
+		return firstName + lastName;
+	}
+
+    public void setFullName(String fullName)
+	{
+		int spaceIndex = fullName.indexOf(' ');
+
+		this.firstName = fullName.substring(0, spaceIndex);
+		this.lastName = fullName.substring(spaceIndex + 1);
+	}
+
+    public Staff(String employeeID, String role, String firstName, String lastName, String dob, String staffEmail)
     {
         this.employeeID = employeeID;
         this.role = role;
@@ -24,7 +93,6 @@ public class Staff {
         this.lastName = lastName;
         this.dob = dob;
         this.staffEmail = staffEmail;
-        this.password = password;
     }
     
     public void addStaff(String firstName, String lastName, String dob, String role, String employeeID, String staffEmail, String password)
@@ -72,6 +140,57 @@ public class Staff {
 		
 		return false;
 	}
+
+    public Staff staffSignIn(String employeeID, String password)
+    {
+        if(Staff.doesStaffExist(employeeID))
+        {
+            try
+            {
+                String staffFile = "./" + employeeID + "/" + employeeID + "_StaffInformation.txt";
+
+                BufferedReader reader = new BufferedReader(new FileReader(staffFile));
+
+                String nameLine = reader.readLine();
+				
+				String fullName = nameLine.substring(7);
+				int spaceIndex = fullName.indexOf(" ");
+				String firstName = fullName.substring(0, spaceIndex);
+				String lastName = fullName.substring(7);
+
+                reader.readLine();
+
+                String passwordLine = reader.readLine();
+                String correctPassword = passwordLine.substring(passwordLine.indexOf(':') + 2);
+                if(password != correctPassword)
+                {
+                    reader.close();
+                    return null;
+                }
+
+                String emailLine = reader.readLine();
+                String email = emailLine.substring(emailLine.indexOf(':') + 2);
+
+                String roleLine = reader.readLine();
+                String role = roleLine.substring(roleLine.indexOf(':') + 2);
+
+                String dobLine = reader.readLine();
+                String dob = dobLine.substring(dobLine.indexOf(':') + 2);
+
+                Staff signedInStaff = new Staff(employeeID, role, firstName, lastName, dob, email);
+
+                reader.close();
+
+                return signedInStaff;
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        
+        return null;
+    }
 
     public String getStaffName(String employeeID)
     {
