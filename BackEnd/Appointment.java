@@ -15,6 +15,7 @@ public class Appointment {
     private NurseExam nurseExam;
     private DoctorExam docExam;
 
+
     public Appointment(Patient patient, String date, String reason) {
         this.patient = patient;
         this.date = date;
@@ -24,75 +25,49 @@ public class Appointment {
 
     public Appointment(String fileName){
 
+
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) { 
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(":", 2);
-                if (parts.length != 2) {
-                    // Invalid line format, skipping
-                    continue;
+                if(line.startsWith("Name: ")){
+                    String name = line.substring(line.indexOf(':') + 2);
+                    this.patient.setFullName(name);
                 }
-                String key = parts[0].trim();
-                String value = parts[1].trim();
+                else if(line.startsWith(("Date: "))){
+                    String date = line.substring(line.indexOf(':') + 2);
+                    this.date = date;
+                }else if(line.startsWith(("Reason: "))){
+                    String reason = line.substring(line.indexOf(':') + 2);
+                    this.reason = reason;
+                }else if(line.startsWith(("Doctor: "))){
+                    
+                }else if(line.startsWith(("Nurse: "))){
+                   
+                }else if(line.startsWith(("NurseExam: "))){
+                    String[] nurseExamParts = value.split("\n");
+                    String allergies = nurseExamParts[1].trim().substring("Allergies:".length());
+                    String healthConcerns = nurseExamParts[2].trim().substring("Health Concerns:".length());
+                    Double weight = Double.parseDouble(nurseExamParts[3].trim().substring("Weight:".length()));
+                    Double height = Double.parseDouble(nurseExamParts[4].trim().substring("Height:".length()));
+                    Double bodyTemp = Double.parseDouble(nurseExamParts[5].trim().substring("BodyTemp:".length()));
+                    Double bloodPressure = Double.parseDouble(nurseExamParts[6].trim().substring("BloodPressure:".length()));
+                    nurseExam = new NurseExam(allergies, healthConcerns, weight, height, bodyTemp, bloodPressure);
+
+                   
+                }else if(line.startsWith(("NurseExam(Under12): "))){
+                    String[] nurseExamParts12 = value.split("\n");
+                    String allergies12 = nurseExamParts12[1].trim().substring("Allergies:".length());
+                    String healthConcerns12 = nurseExamParts12[2].trim().substring("Health Concerns:".length());
+                    nurseExam = new NurseExam(allergies12, healthConcerns12);
 
 
-                if(line.startsWith("Name : "))
-                {
-                    this.patient.setFullName(key, value);
-                }
-                else if(line.startsWith(("Date : ")))
+                }else if(line.startsWith(("DoctoreExam: "))){
+                    String[] docExamParts = value.split("\n");
+                    String notes = docExamParts[1].trim().substring("Notes:".length());
+                    String prescription = docExamParts[2].trim().substring("Prescription:".length());
+                    String prescriptionQuantity = docExamParts[3].trim().substring("Quantity:".length());
+                    docExam = new DoctorExam(notes, prescription, prescriptionQuantity);
 
-                switch (key) {
-                    case "Name":
-                        //patient = new Patient(;
-
-
-
-                        break;
-                    case "Date":
-                        date = value;
-                        break;
-                    case "Reason":
-                        reason = value;
-                        break;
-
-                    case "Doctor":
-                        //doctor = new Staff();
-
-
-
-                        break;
-
-                    case "Nurse":
-                        //nurse = new Staff();
-
-
-                        break;
-                    case "NurseExam": //NEEDS ACCOUNT FOR UNDER 12
-                        String[] nurseExamParts = value.split("\n");
-                        String allergies = nurseExamParts[1].trim().substring("Allergies:".length());
-                        String healthConcerns = nurseExamParts[2].trim().substring("Health Concerns:".length());
-                        Double weight = Double.parseDouble(nurseExamParts[3].trim().substring("Weight:".length()));
-                        Double height = Double.parseDouble(nurseExamParts[4].trim().substring("Height:".length()));
-                        Double bodyTemp = Double.parseDouble(nurseExamParts[5].trim().substring("BodyTemp:".length()));
-                        Double bloodPressure = Double.parseDouble(nurseExamParts[6].trim().substring("BloodPressure:".length()));
-                        nurseExam = new NurseExam(allergies, healthConcerns, weight, height, bodyTemp, bloodPressure);
-                        break;
-                    case "NurseExam(Under12)": //NEEDS ACCOUNT FOR UNDER 12
-                        String[] nurseExamParts12 = value.split("\n");
-                        String allergies12 = nurseExamParts12[1].trim().substring("Allergies:".length());
-                        String healthConcerns12 = nurseExamParts12[2].trim().substring("Health Concerns:".length());
-                            nurseExam = new NurseExam(allergies12, healthConcerns12);
-                        break;
-                    case "DoctorExam":
-                        String[] docExamParts = value.split("\n");
-                        String notes = docExamParts[1].trim().substring("Notes:".length());
-                        String prescription = docExamParts[2].trim().substring("Prescription:".length());
-                        String prescriptionQuantity = docExamParts[3].trim().substring("Quantity:".length());
-                        docExam = new DoctorExam(notes, prescription, prescriptionQuantity);
-                        break;
-                    default:
-                        break;
                 }
             }
             reader.close();
@@ -125,7 +100,7 @@ public class Appointment {
 
             FileWriter writer = new FileWriter(staffFile, false);
 
-            writer.write("Name : " +  patient.getName() + "\n");
+            writer.write("Name: " +  patient.getName() + "\n");
             writer.write("Date: " + date + "\n");
             writer.write("Reason: " + reason + "\n");
             if(!(nurseExam == null)){
