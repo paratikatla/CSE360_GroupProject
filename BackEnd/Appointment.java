@@ -19,7 +19,7 @@ public class Appointment {
         this.patient = patient;
         this.date = date;
         this.reason = reason;
-        createAppointmentFIle();
+        createAppointmentFile();
     }
 
     public Appointment(String fileName){
@@ -34,6 +34,13 @@ public class Appointment {
                 }
                 String key = parts[0].trim();
                 String value = parts[1].trim();
+
+
+                if(line.startsWith("Name : "))
+                {
+                    this.patient.setFullName(key, value);
+                }
+                else if(line.startsWith(("Date : ")))
 
                 switch (key) {
                     case "Name":
@@ -97,13 +104,13 @@ public class Appointment {
     public void setDoctor(Staff doctor, DoctorExam exam) {
         this.doctor = doctor;
         this.docExam = exam;
-        createAppointmentFIle();
+        createAppointmentFile();
     }
 
     public void setNurse(Staff nurse, NurseExam exam) {
         this.nurse = nurse;
         this.nurseExam = exam;
-        createAppointmentFIle();
+        createAppointmentFile();
     }
 
     public void createAppointmentFile(){
@@ -118,7 +125,7 @@ public class Appointment {
 
             FileWriter writer = new FileWriter(staffFile, false);
 
-            writer.write("Name : " +  patient.getName() +  + "\n");
+            writer.write("Name : " +  patient.getName() + "\n");
             writer.write("Date: " + date + "\n");
             writer.write("Reason: " + reason + "\n");
             if(!(nurseExam == null)){

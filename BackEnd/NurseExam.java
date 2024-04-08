@@ -69,6 +69,6 @@ public class NurseExam {
     }
 
     public String toStringUnderTwelveString (){
-        return "NurseExam(Under12):  \nAllergies:" + allergies + "\n HealthConcerns:" + healthConcerns +  "\n";
+        return "NurseExam(Under12):  \n Allergies:" + allergies + "\n HealthConcerns:" + healthConcerns +  "\n";
     }
 }
