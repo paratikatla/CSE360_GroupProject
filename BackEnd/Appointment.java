@@ -23,8 +23,8 @@ public class Appointment {
     }
 
     public Appointment(String fileName){
-        
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) { //File is ready to be read from 
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) { 
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(":", 2);
@@ -37,13 +37,29 @@ public class Appointment {
 
                 switch (key) {
                     case "Name":
-                        //patient = new Patient(value);
+                        //patient = new Patient(;
+
+
+
                         break;
                     case "Date":
                         date = value;
                         break;
                     case "Reason":
                         reason = value;
+                        break;
+
+                    case "Doctor":
+                        //doctor = new Staff();
+
+
+
+                        break;
+
+                    case "Nurse":
+                        //nurse = new Staff();
+
+
                         break;
                     case "NurseExam": //NEEDS ACCOUNT FOR UNDER 12
                         String[] nurseExamParts = value.split("\n");
@@ -55,7 +71,13 @@ public class Appointment {
                         Double bloodPressure = Double.parseDouble(nurseExamParts[6].trim().substring("BloodPressure:".length()));
                         nurseExam = new NurseExam(allergies, healthConcerns, weight, height, bodyTemp, bloodPressure);
                         break;
-                    case "DocExam":
+                    case "NurseExam(Under12)": //NEEDS ACCOUNT FOR UNDER 12
+                        String[] nurseExamParts12 = value.split("\n");
+                        String allergies12 = nurseExamParts12[1].trim().substring("Allergies:".length());
+                        String healthConcerns12 = nurseExamParts12[2].trim().substring("Health Concerns:".length());
+                            nurseExam = new NurseExam(allergies12, healthConcerns12);
+                        break;
+                    case "DoctorExam":
                         String[] docExamParts = value.split("\n");
                         String notes = docExamParts[1].trim().substring("Notes:".length());
                         String prescription = docExamParts[2].trim().substring("Prescription:".length());
@@ -68,7 +90,7 @@ public class Appointment {
             }
             reader.close();
         } catch (IOException e) {
-            System.err.println(e.getMessage()); //Although this should be previously checked, if the file is not found the error will be handled
+            System.err.println(e.getMessage());
         }  
     }
 

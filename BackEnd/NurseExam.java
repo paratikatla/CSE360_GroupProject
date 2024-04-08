@@ -64,11 +64,11 @@ public class NurseExam {
     public String toString() {
         //add if patient under12 check
 
-        return "Nurse Exam: \nAllergies:" + allergies + "\n Health Concerns:" + healthConcerns + "\n Weight:" + weight
-                + "\nHeight=" + height + "\n BodyTemp=" + bodyTemp + "\n BloodPressure=" + bloodPressure  +  "\n";
+        return "NurseExam: \nAllergies:" + allergies + "\n Health Concerns:" + healthConcerns + "\n Weight:" + weight
+                + "\nHeight:" + height + "\n BodyTemp:" + bodyTemp + "\n BloodPressure:" + bloodPressure  +  "\n";
     }
 
     public String toStringUnderTwelveString (){
-        return "Nurse Exam (Under 12):  \nAllergies=" + allergies + "\n HealthConcerns=" + healthConcerns +  "\n";
+        return "NurseExam(Under12):  \nAllergies:" + allergies + "\n HealthConcerns:" + healthConcerns +  "\n";
     }
 }
