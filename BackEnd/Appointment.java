@@ -1,4 +1,4 @@
-package CSE360_GroupProject;
+package BackEnd;
 public class Appointment {
     //private Doctor doctor;
     //private Nurse nurse;
