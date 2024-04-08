@@ -36,7 +36,17 @@ public class DoctorExam {
 
     @Override
     public String toString() {
-        return "DoctorExam [notes=" + notes + ", prescription=" + prescription + ", prescriptionQuantity="
-                + prescriptionQuantity + "]";
+        return "DoctorExam: \n Notes:" + notes + "\nPrescription:" + prescription + "\nQuantity: "
+                + prescriptionQuantity + "\n";
     }
+
+
+
+
+
+
+
+
+
+
 }

@@ -62,11 +62,13 @@ public class NurseExam {
 
     @Override
     public String toString() {
-        return "NurseExam [allergies=" + allergies + ", healthConcerns=" + healthConcerns + ", weight=" + weight
-                + ", height=" + height + ", bodyTemp=" + bodyTemp + ", bloodPressure=" + bloodPressure + "]";
+        //add if patient under12 check
+
+        return "Nurse Exam: \nAllergies:" + allergies + "\n Health Concerns:" + healthConcerns + "\n Weight:" + weight
+                + "\nHeight=" + height + "\n BodyTemp=" + bodyTemp + "\n BloodPressure=" + bloodPressure  +  "\n";
     }
 
     public String toStringUnderTwelveString (){
-        return "NurseExamUnder12 [allergies=" + allergies + ", healthConcerns=" + healthConcerns +  "]";
+        return "Nurse Exam (Under 12):  \nAllergies=" + allergies + "\n HealthConcerns=" + healthConcerns +  "\n";
     }
 }
