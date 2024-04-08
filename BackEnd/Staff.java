@@ -16,6 +16,75 @@ public class Staff {
     String staffEmail;
     String password;
 
+    public String getEmployeeID() {
+        return employeeID;
+    }
+
+    public void setEmployeeID(String employeeID) {
+        this.employeeID = employeeID;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
+    public String getStaffEmail() {
+        return staffEmail;
+    }
+
+    public void setStaffEmail(String staffEmail) {
+        this.staffEmail = staffEmail;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFullName()
+	{
+		return firstName + lastName;
+	}
+
+    public void setFullName(String fullName)
+	{
+		int spaceIndex = fullName.indexOf(' ');
+
+		this.firstName = fullName.substring(0, spaceIndex);
+		this.lastName = fullName.substring(spaceIndex + 1);
+	}
+
     public Staff(String employeeID, String role, String firstName, String lastName, String dob, String staffEmail)
     {
         this.employeeID = employeeID;
