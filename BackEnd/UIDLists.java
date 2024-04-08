@@ -1,3 +1,4 @@
+package BackEnd;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -6,9 +7,9 @@ import java.io.IOException;
 public class UIDLists {
 
     public static String patientFile = "PatientUIDList.txt";
-    public static String doctorFile = "DoctorUIDList.txt";
+    public static String staffFile = "StaffUIDList.txt";
 
-    // Functions to get UID Lists for Patients and Doctors
+    // Functions to get UID Lists for Patients and Staffs
 
     public static String getPatientUIDList()
 	{
@@ -35,11 +36,11 @@ public class UIDLists {
 		
 	}
 
-    public static String getDoctorUIDList()
+    public static String getStaffUIDList()
 	{
 		try 
 		{
-			BufferedReader reader = new BufferedReader(new FileReader(doctorFile));
+			BufferedReader reader = new BufferedReader(new FileReader(staffFile));
 			String UIDList = reader.readLine();
 			reader.close();
 			
@@ -62,7 +63,7 @@ public class UIDLists {
 
 
 
-    // Add Patient and Doctor to UID List for existence validation
+    // Add Patient and Staff to UID List for existence validation
 
     public static void addPatientToUIDList(int uid)
 	{
@@ -91,10 +92,10 @@ public class UIDLists {
 		}
 	}
 
-    public static void addToDoctorUIDList(int uid)
+    public static void addStaffToUIDList(String uid)
 	{
 		
-		String UIDList = getDoctorUIDList();
+		String UIDList = getStaffUIDList();
 		
 		if(UIDList != null)
 		{
@@ -108,7 +109,7 @@ public class UIDLists {
 		
 		try
 		{	
-			FileWriter writer = new FileWriter(doctorFile, false);
+			FileWriter writer = new FileWriter(staffFile, false);
 			writer.write(UIDList);
 			writer.close();
 		}
@@ -134,11 +135,11 @@ public class UIDLists {
         }
 	}
 
-	public static void clearDoctorUIDList()
+	public static void clearStaffUIDList()
 	{
 		try 
 		{
-            FileWriter writer = new FileWriter(doctorFile, false); // false to overwrite
+            FileWriter writer = new FileWriter(staffFile, false); // false to overwrite
             writer.write("");
             writer.close();
         } catch (IOException e) {

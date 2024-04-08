@@ -1,4 +1,4 @@
-package CSE360_GroupProject;
+package BackEnd;
 public class NurseExam {
     private String allergies;
     private String healthConcerns;

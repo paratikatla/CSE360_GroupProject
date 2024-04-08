@@ -1,4 +1,4 @@
-package CSE360_GroupProject;
+package BackEnd;
 public class DoctorExam {
     private String notes;
     private String prescription;
