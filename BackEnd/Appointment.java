@@ -29,7 +29,7 @@ public class Appointment {
         this.nurseExam = exam;
     }
 
-    public void createAppointmentFIle(){
+    public void createAppointmentFile(){
         try{
             String directoryName = "./" + employeeID;
             File directory = new File(directoryName);

@@ -6,7 +6,41 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class Patient {
+public class Patient 
+{
+
+	int uid;
+	String firstName;
+	String lastName;
+	String password;
+	String email;
+	String phoneNumber;
+	String dob;
+	String insuranceProvider;
+	String providerPhone;
+	String policyID;
+	String pharmacyName;
+	String pharmacyPhone;
+	String pharmacyAddress;
+
+	public Patient(int uid, String firstName, String lastName, String password, String email, String phoneNumber, String dob, String insuranceProvider, String providerPhone, String policyID, String pharmacyName, String pharmacyPhone, String pharmacyAddress)
+	{
+		this.uid = uid;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.password = password;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.dob = dob;
+		this.insuranceProvider = insuranceProvider;
+		this.providerPhone = providerPhone;
+		this.policyID = policyID;
+		this.pharmacyName = pharmacyName;
+		this.pharmacyPhone = pharmacyPhone;
+		this.pharmacyAddress = pharmacyAddress;
+	}
+	
+	
 
     public static void addPatient(int uid, String firstName, String lastName, String password, String email, String phoneNumber, String dob, String insuranceProvider, String providerPhone, String policyID, String pharmacyName, String pharmacyPhone, String pharmacyAddress)
 	{
@@ -62,6 +96,109 @@ public class Patient {
 		
 		return false;
 	}
+
+	public Patient patientSignIn(String uid, String password)
+    {
+        if(doesPatientExist(uid))
+        {
+            try
+            {
+                String patientFile = "./" + uid + "/" + uid + "_PatientInformation.txt";
+
+                BufferedReader reader = new BufferedReader(new FileReader(patientFile));
+
+
+				String nameLine = reader.readLine();
+				
+				String fullName = nameLine.substring(7);
+				int spaceIndex = fullName.indexOf(" ");
+				String firstName = fullName.substring(0, spaceIndex);
+				String lastName = fullName.substring(7);
+
+
+
+				reader.readLine();
+
+
+
+				String passwordLine = reader.readLine();
+				String correctPassword = passwordLine.substring(11);
+				if(!(password.equals(correctPassword)))
+				{
+					reader.close();
+					return null;
+				}
+
+
+
+				String emailLine = reader.readLine();
+				String email = emailLine.substring(8);
+
+
+				
+				String phoneNumberLine = reader.readLine();
+				String phoneNumber = phoneNumberLine.substring(15);
+
+
+
+				String birthDateLine = reader.readLine();
+				String birthDate = birthDateLine.substring(16);
+
+
+
+				reader.readLine();
+
+
+
+				String insuranceProviderLine = reader.readLine();
+				String insuranceProvider = insuranceProviderLine.substring(21);
+
+
+
+				String insuranceProviderPhoneLine = reader.readLine();
+				String insuranceProviderPhone = insuranceProviderPhoneLine.substring(insuranceProviderPhoneLine.indexOf(':') + 2);
+				
+
+
+				String policyIDLine = reader.readLine();
+				String policyID = policyIDLine.substring(policyIDLine.indexOf(':') + 2);
+
+
+
+				reader.readLine();
+
+
+
+				String pharmacyNameLine = reader.readLine();
+				String pharmacyName = pharmacyNameLine.substring(pharmacyNameLine.indexOf(':') + 2);
+
+
+
+				String pharmacyPhoneLine = reader.readLine();
+				String pharmacyPhone = pharmacyPhoneLine.substring(pharmacyPhoneLine.indexOf(':') + 2);
+
+
+
+				String pharmacyAddressLine = reader.readLine();
+				String pharmacyAddress = pharmacyAddressLine.substring(pharmacyAddressLine.indexOf(':') + 2);
+
+				
+				int stringUID = Integer.parseInt(uid);
+
+				Patient signedInPatient = new Patient(stringUID, firstName, lastName, correctPassword, email, phoneNumber, birthDate, insuranceProvider, insuranceProviderPhone, policyID, pharmacyName, pharmacyPhone, pharmacyAddress);
+                
+
+                reader.close();
+
+				return signedInPatient;
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 
 	public static void replaceLine(String filePath, String field, String newText)
 	{
