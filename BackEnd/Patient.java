@@ -23,6 +23,176 @@ public class Patient
 	String pharmacyPhone;
 	String pharmacyAddress;
 
+	public void setUid(int uid) {
+		this.uid = uid;
+	}
+
+
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+
+
+	public void setDob(String dob) {
+		this.dob = dob;
+	}
+
+
+
+	public void setInsuranceProvider(String insuranceProvider) {
+		this.insuranceProvider = insuranceProvider;
+	}
+
+
+
+	public void setProviderPhone(String providerPhone) {
+		this.providerPhone = providerPhone;
+	}
+
+
+
+	public void setPolicyID(String policyID) {
+		this.policyID = policyID;
+	}
+
+
+
+	public void setPharmacyName(String pharmacyName) {
+		this.pharmacyName = pharmacyName;
+	}
+
+
+
+	public void setPharmacyPhone(String pharmacyPhone) {
+		this.pharmacyPhone = pharmacyPhone;
+	}
+
+
+
+	public void setPharmacyAddress(String pharmacyAddress) {
+		this.pharmacyAddress = pharmacyAddress;
+	}
+
+
+	public void setFullName(String first, String last)
+	{
+		firstName = first;
+		lastName = last;
+	}
+
+
+
+	public int getUid() {
+		return uid;
+	}
+
+
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+
+
+	public String getLastName() {
+		return lastName;
+	}
+
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+
+
+	public String getDob() {
+		return dob;
+	}
+
+
+
+	public String getInsuranceProvider() {
+		return insuranceProvider;
+	}
+
+
+
+	public String getProviderPhone() {
+		return providerPhone;
+	}
+
+
+
+	public String getPolicyID() {
+		return policyID;
+	}
+
+
+
+	public String getPharmacyName() {
+		return pharmacyName;
+	}
+
+
+
+	public String getPharmacyPhone() {
+		return pharmacyPhone;
+	}
+
+
+
+	public String getPharmacyAddress() {
+		return pharmacyAddress;
+	}
+
+	public String getFullName()
+	{
+		return firstName + lastName;
+	}
+
+	
+
+
+
 	public Patient(int uid, String firstName, String lastName, String password, String email, String phoneNumber, String dob, String insuranceProvider, String providerPhone, String policyID, String pharmacyName, String pharmacyPhone, String pharmacyAddress)
 	{
 		this.uid = uid;
