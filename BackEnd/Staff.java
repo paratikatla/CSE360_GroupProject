@@ -7,6 +7,25 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Staff {
+
+    String employeeID;
+    String role;
+    String firstName;
+    String lastName;
+    String dob;
+    String staffEmail;
+    String password;
+
+    public Staff(String employeeID, String role, String firstName, String lastName, String dob, String staffEmail, String password)
+    {
+        this.employeeID = employeeID;
+        this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.staffEmail = staffEmail;
+        this.password = password;
+    }
     
     public void addStaff(String firstName, String lastName, String dob, String role, String employeeID, String staffEmail, String password)
     {
