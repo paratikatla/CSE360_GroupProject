@@ -1,4 +1,4 @@
-package CSE360_GroupProject;
+package BackEnd;
 
 public class PatientAppointmentHistory {
     
