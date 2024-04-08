@@ -54,6 +54,30 @@ public class Staff {
 		return false;
 	}
 
+    public String getStaffName(String employeeID)
+    {
+        try
+        {
+            String staffFile = "./" + employeeID + "/" + employeeID + "_StaffInformation.txt";
+
+            BufferedReader reader = new BufferedReader(new FileReader(staffFile));
+
+            String nameLine = reader.readLine();
+
+            String name = nameLine.substring(7);
+
+            reader.close();
+
+            return name;
+        }
+        catch (IOException e) 
+		{
+            e.printStackTrace();
+        }
+
+        return "Staff Member not found";
+    }
+
     public static void replaceLine(String filePath, String field, String newText)
 	{
 		String tempFile = "temp.txt";
