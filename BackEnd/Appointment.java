@@ -106,7 +106,7 @@ public class Appointment {
         createAppointmentFIle();
     }
 
-    public void createAppointmentFIle(){
+    public void createAppointmentFile(){
         try{
             String directoryName = "./" ;
             File directory = new File(directoryName);
