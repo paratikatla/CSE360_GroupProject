@@ -58,29 +58,36 @@ public class NurseViewOver12 extends Application {
         header.getChildren().addAll(top, leftSpacer, clinicInfo, rightSpacer, dateLabel);
         
         Label patientVitals = new Label("Patient Vitals");
+        patientVitals.setStyle("-fx-font-weight: BOLD; -fx-font-size: 20px");
         
         Label weight = new Label("Weight (lbs):");
+        weight.setStyle("-fx-font-weight: BOLD; -fx-font-size: 15px");
         TextField weightField = new TextField();
         VBox w = new VBox(10, weight, weightField);
         
         Label height = new Label("Height (in):");
+        height.setStyle("-fx-font-weight: BOLD; -fx-font-size: 15px");
         TextField heightField = new TextField();
         VBox h = new VBox(10, height, heightField);
         
         Label temp = new Label("Body Temperature (F):");
+        temp.setStyle("-fx-font-weight: BOLD; -fx-font-size: 15px");
         TextField tempField = new TextField();
         VBox t = new VBox(10, temp, tempField);
         
         Label bloodpressure = new Label("Blood Pressure:");
+        bloodpressure.setStyle("-fx-font-weight: BOLD; -fx-font-size: 15px");
         TextField bloodpressureField = new TextField();
         VBox bp = new VBox(10, bloodpressure, bloodpressureField);
         
         VBox body_left = new VBox(40, patientVitals, w, h, t, bp);
         
         Label patientInfoLabel = new Label("Patient Information:");
+        patientInfoLabel.setStyle("-fx-font-weight: BOLD; -fx-font-size: 20px");
 
-        VBox body_right_top = new VBox();
+        VBox body_right_top = new VBox(10);
         Label allergiesLabel = new Label("Allergies:");
+        allergiesLabel.setStyle("-fx-font-weight: BOLD; -fx-font-size: 15px");
         allergiesLabel.setAlignment(Pos.BASELINE_LEFT);
         TextArea allergiesInput = new TextArea();
         allergiesInput.setPromptText("Type here");
@@ -89,8 +96,9 @@ public class NurseViewOver12 extends Application {
         body_right_top.getChildren().addAll(allergiesLabel, allergiesInput);
         body_right_top.setAlignment(Pos.CENTER);
         
-        VBox body_right_bottom = new VBox();
+        VBox body_right_bottom = new VBox(10);
         Label healthConcernsLabel = new Label("Health Concerns:");
+        healthConcernsLabel.setStyle("-fx-font-weight: BOLD; -fx-font-size: 15px");
         TextArea healthConcernsInput = new TextArea();
         healthConcernsInput.setPromptText("Type here");
         healthConcernsInput.setMaxWidth(600);
@@ -114,6 +122,7 @@ public class NurseViewOver12 extends Application {
         });
         HBox clicks = new HBox(30, submitButton, viewHistoryButton);
         clicks.setAlignment(Pos.CENTER);
+        clicks.setPadding(new Insets(0,0,20,0));
         
         VBox body_right = new VBox(30, patientInfoLabel, body_right_top, body_right_bottom, clicks);
         
