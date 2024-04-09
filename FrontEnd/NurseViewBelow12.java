@@ -59,9 +59,11 @@ public class NurseViewBelow12 extends Application {
         header.getChildren().addAll(top, leftSpacer, clinicInfo, rightSpacer, dateLabel);
 
         Label patientInfoLabel = new Label("Patient Information:");
+        patientInfoLabel.setStyle("-fx-font-weight: BOLD; -fx-font-size: 20px");
 
-        VBox body_top = new VBox();
+        VBox body_top = new VBox(10);
         Label allergiesLabel = new Label("Allergies:");
+        allergiesLabel.setStyle("-fx-font-weight: BOLD; -fx-font-size: 15px");
         allergiesLabel.setAlignment(Pos.BASELINE_LEFT);
         TextArea allergiesInput = new TextArea();
         allergiesInput.setPromptText("Type here");
@@ -70,8 +72,9 @@ public class NurseViewBelow12 extends Application {
         body_top.getChildren().addAll(allergiesLabel, allergiesInput);
         body_top.setAlignment(Pos.CENTER);
         
-        VBox body_bottom = new VBox();
+        VBox body_bottom = new VBox(10);
         Label healthConcernsLabel = new Label("Health Concerns:");
+        healthConcernsLabel.setStyle("-fx-font-weight: BOLD; -fx-font-size: 15px");
         TextArea healthConcernsInput = new TextArea();
         healthConcernsInput.setPromptText("Type here");
         healthConcernsInput.setMaxWidth(600);
@@ -93,6 +96,7 @@ public class NurseViewBelow12 extends Application {
             }
         });
         HBox clicks = new HBox(30, submitButton, viewHistoryButton);
+        clicks.setPadding(new Insets(0,0,20,0));
         clicks.setAlignment(Pos.CENTER);
         
         VBox body = new VBox(30, patientInfoLabel, body_top, body_bottom, clicks);
