@@ -1,5 +1,4 @@
 package FrontEnd;
-
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.event.ActionEvent;
@@ -17,18 +16,18 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class PatientLoginPage {
-    
+public class StaffLoginPage {
+
     private static Stage currStage;
 
-    public static Scene getPatientLoginPage(Stage stage)
+    public static Scene getStaffLoginPage(Stage stage)
     {
 
         currStage = stage;
 
-        currStage.setTitle("Patient Login");
+        currStage.setTitle("Staff Login Page");
 
-        BorderPane patientLogin = new BorderPane();
+        BorderPane staffLogin = new BorderPane();
 		
 		VBox upperHolder = new VBox(30);
 		HBox titleHolder = new HBox(10);
@@ -47,7 +46,7 @@ public class PatientLoginPage {
 		titleHolder.getChildren().add(logo);
 		titleHolder.setAlignment(Pos.CENTER);
 		
-		Label staffLabel = new Label("Patient Login");
+		Label staffLabel = new Label("Staff Login");
 		staffLabel.setFont(Font.font("Times New Roman", FontWeight.BOLD, 30));
 		
 		upperHolder.getChildren().add(titleHolder);
@@ -123,11 +122,11 @@ public class PatientLoginPage {
         
         
         
-        VBox notPatient = new VBox();
+        VBox notStaff = new VBox();
         
-        Label notPatientLabel = new Label("Not a patient?");
-        Button staffLogin = new Button("Staff Login");
-        staffLogin.setStyle("-fx-font-size: 14px; " +  
+        Label notStaffMember = new Label("Not a staff member?");
+        Button patientLogin = new Button("Patient Login");
+        patientLogin.setStyle("-fx-font-size: 14px; " +  
 			                  "-fx-padding: 10 20; " + 
 			                  "-fx-border-color: black; " + 
 			                  "-fx-border-width: 2; " + 
@@ -137,74 +136,37 @@ public class PatientLoginPage {
 			                  "-fx-pref-height: 20;" + 
 			                  "-fx-pref-width: 150;");
         
-        notPatient.getChildren().add(notPatientLabel);
-        notPatient.getChildren().add(staffLogin);
-        notPatient.setAlignment(Pos.CENTER);
+        notStaff.getChildren().add(notStaffMember);
+        notStaff.getChildren().add(patientLogin);
+        notStaff.setAlignment(Pos.CENTER);
         
         
         extraFields.getChildren().add(createAccount);
-        extraFields.getChildren().add(notPatient);
+        extraFields.getChildren().add(notStaff);
         extraFields.setAlignment(Pos.CENTER);
         
         
         BorderPane.setMargin(extraFields, new Insets(0, 0, 10, 0));
         
         
-        
-		patientLogin.setTop(upperHolder);
-		patientLogin.setCenter(loginHolder);
-		patientLogin.setBottom(extraFields);
+		staffLogin.setTop(upperHolder);
+		staffLogin.setCenter(loginHolder);
+		staffLogin.setBottom(extraFields);
 		
-		class NotPatientButtonHandler implements EventHandler<ActionEvent>
+		class NotStaffButtonHandler implements EventHandler<ActionEvent>
 		{
 			public void handle(ActionEvent event)
 			{
-				Scene staffLoginPage = StaffLoginPage.getStaffLoginPage(currStage);
-				currStage.setScene(staffLoginPage);
+				Scene patientLoginScene = PatientLoginPage.getPatientLoginPage(currStage);
+                currStage.setScene(patientLoginScene);
 			}
 		}
 		
-		NotPatientButtonHandler notPatientHandler = new NotPatientButtonHandler();
-		staffLogin.setOnAction(notPatientHandler);
-		
-		
-		
-		class PatientCreationButtonHandler implements EventHandler<ActionEvent>
-		{
-			public void handle(ActionEvent event)
-			{
-				Scene patientRegistration1Scene = PatientRegistration1.getPatientRegistration1(currStage);
-				currStage.setScene(patientRegistration1Scene);
-			}
-		}
-		
-		PatientCreationButtonHandler patientCreationHandler = new PatientCreationButtonHandler();
-		createAccountButton.setOnAction(patientCreationHandler);
-		
-		
-		
-		// class LoginButtonHandler implements EventHandler<ActionEvent>
-		// {
-		// 	public void handle(ActionEvent event)
-		// 	{
-		// 		if(loginInfo.findPatient(emailTextField.getText(), passwordTextField.getText()))
-		// 		{
-		// 			SampleSuccessfulLogin successfulLogin = new SampleSuccessfulLogin(mainApp);
-		// 			mainApp.navigateTo(successfulLogin);
-		// 		}
-		// 		else
-		// 		{
-		// 			System.out.print("Patient not found\n");
-		// 			System.out.print(emailTextField.getText() + " + " + passwordTextField.getText() + "\n");
-		// 		}
-		// 	}
-		// }
-		
-		// LoginButtonHandler loginHandler = new LoginButtonHandler();
-		// loginButton.setOnAction(loginHandler);
+		NotStaffButtonHandler notStaffHandler = new NotStaffButtonHandler();
+		patientLogin.setOnAction(notStaffHandler);
 
-
-        Scene patientLoginScene = new Scene(patientLogin, 700, 500);
-        return patientLoginScene;
+        Scene staffLoginScene = new Scene(staffLogin, 700, 500);
+        return staffLoginScene;
     }
+    
 }

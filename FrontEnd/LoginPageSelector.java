@@ -86,14 +86,14 @@ public class LoginPageSelector
 		loginPage.setCenter(buttonHolder);
 		BorderPane.setMargin(titleHolder, new Insets(20, 0, 0, 0));
 		
-		// class StaffLoginButtonHandler implements EventHandler<ActionEvent>
-		// {
-		// 	public void handle(ActionEvent event)
-		// 	{
-		// 		StaffLogin staffLoginPage = new StaffLogin(mainApp, loginInfo);
-		// 		mainApp.navigateTo(staffLoginPage);
-		// 	}
-		// }
+		class StaffLoginButtonHandler implements EventHandler<ActionEvent>
+		{
+			public void handle(ActionEvent event)
+			{
+				Scene staffLoginPage = StaffLoginPage.getStaffLoginPage(currStage);
+				currStage.setScene(staffLoginPage);
+			}
+		}
 		
 		class PatientLoginButtonHandler implements EventHandler<ActionEvent>
 		{
@@ -104,8 +104,8 @@ public class LoginPageSelector
 			}
 		}
 		
-		// StaffLoginButtonHandler staffButtonHandler = new StaffLoginButtonHandler();
-		// staffLogin.setOnAction(staffButtonHandler);
+		StaffLoginButtonHandler staffButtonHandler = new StaffLoginButtonHandler();
+		staffLogin.setOnAction(staffButtonHandler);
 		
 		PatientLoginButtonHandler patientButtonHandler = new PatientLoginButtonHandler();
 		patientLogin.setOnAction(patientButtonHandler);

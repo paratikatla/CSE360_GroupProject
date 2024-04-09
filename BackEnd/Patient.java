@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Random;
 
 public class Patient 
 {
@@ -211,9 +212,15 @@ public class Patient
 		this.pharmacyPhone = pharmacyPhone;
 		this.pharmacyAddress = pharmacyAddress;
 	}
-	
-	
 
+	public static int generateRandUID()
+	{
+		Random rand = new Random();
+		int uid = 10000 + rand.nextInt(90000);
+		return uid;
+	}
+	
+	
     public static void addPatient(int uid, String firstName, String lastName, String password, String email, String phoneNumber, String dob, String insuranceProvider, String providerPhone, String policyID, String pharmacyName, String pharmacyPhone, String pharmacyAddress)
 	{
 		try
