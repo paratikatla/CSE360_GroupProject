@@ -276,7 +276,7 @@ public class Patient
 		return false;
 	}
 
-	public Patient patientSignIn(String uid, String password)
+	public static Patient patientSignIn(String uid, String password)
     {
         if(doesPatientExist(uid))
         {

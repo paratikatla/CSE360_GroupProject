@@ -95,7 +95,7 @@ public class Staff {
         this.staffEmail = staffEmail;
     }
     
-    public void addStaff(String firstName, String lastName, String dob, String role, String employeeID, String staffEmail, String password)
+    public static void addStaff(String firstName, String lastName, String dob, String role, String employeeID, String staffEmail, String password)
     {
 
         try
@@ -141,7 +141,7 @@ public class Staff {
 		return false;
 	}
 
-    public Staff staffSignIn(String employeeID, String password)
+    public static Staff staffSignIn(String employeeID, String password)
     {
         if(Staff.doesStaffExist(employeeID))
         {

@@ -1,0 +1,14 @@
+Name : Pranav Aratikatla
+Patient ID : 74947
+Password : ashwin572
+Email : paratika@asu.edu
+Phone Number : 6263445579
+Date of Birth : 06/03/2004
+
+Insurance Provider : Kaiser Permanente
+Insurance Provider Phone Number : 6137810398
+Policy ID : 129731981
+
+Pharmacy : 28918731
+Pharmacy Phone Number : 28918731
+Pharmacy Address : address here

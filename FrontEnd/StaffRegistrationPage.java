@@ -18,19 +18,21 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import javafx.scene.control.ComboBox;
+import BackEnd.Staff;
 
-public class PatientRegistration1 {
-    
+public class StaffRegistrationPage
+{
+
     private static Stage currStage;
 
-    public static Scene getPatientRegistration1(Stage stage)
+    public static Scene getStaffRegistrationPage(Stage stage)
     {
-
         currStage = stage;
 
-        currStage.setTitle("Patient Registration");
+        currStage.setTitle("Staff Registration");
 
-        BorderPane patientCreation = new BorderPane();
+        BorderPane staffCreation = new BorderPane();
 		
 		
 		VBox upperHolder = new VBox(30);
@@ -45,7 +47,7 @@ public class PatientRegistration1 {
 		logo.setFitHeight(60);
 		logo.setFitWidth(60);
 		
-		Label patientLabel = new Label("Patient Account Creation");
+		Label patientLabel = new Label("Staff Account Creation");
 		patientLabel.setFont(Font.font("Times New Roman", FontWeight.BOLD, 30));
 		
 		titleHolder.getChildren().add(title);
@@ -89,28 +91,38 @@ public class PatientRegistration1 {
 		lastNameField.setMaxWidth(300);
 		
 		
-		
-		TextField phoneField = new TextField();
-		phoneField.setPromptText("Phone Number");
-		phoneField.setStyle("-fx-padding: 10;" +
-			 	                   "-fx-font-size: 16px;" +
-			 	                   "-fx-border-color: black;" +
-				                   "-fx-border-width: 1;" +
-				                   "-fx-border-radius: 5;" +
-				                   "-fx-pref-height: 40;");
-		phoneField.setMaxWidth(300);
+		DatePicker datePicker = new DatePicker();
+
+
+
+		ComboBox<String> roleBox = new ComboBox<>();
+        roleBox.getItems().addAll("Doctor", "Nurse");
+        roleBox.setPromptText("Select Role");
+        
 		
 		
 		
 		leftBox.getChildren().add(firstNameField);
 		leftBox.getChildren().add(lastNameField);
-		leftBox.getChildren().add(phoneField);
+		leftBox.getChildren().add(datePicker);
+        leftBox.getChildren().add(roleBox);
 		leftBox.setAlignment(Pos.CENTER);
+
+
+        TextField employeeID = new TextField();
+		employeeID.setPromptText("Employee ID");
+		employeeID.setStyle("-fx-padding: 10;" +
+			 	                   "-fx-font-size: 16px;" +
+			 	                   "-fx-border-color: black;" +
+				                   "-fx-border-width: 1;" +
+				                   "-fx-border-radius: 5;" +
+				                   "-fx-pref-height: 40;");
+		employeeID.setMaxWidth(300);
 		
 		
 		
 		TextField emailField = new TextField();
-		emailField.setPromptText("Email");
+		emailField.setPromptText("Staff Email");
 		emailField.setStyle("-fx-padding: 10;" +
 			 	                   "-fx-font-size: 16px;" +
 			 	                   "-fx-border-color: black;" +
@@ -133,13 +145,13 @@ public class PatientRegistration1 {
 		
 		
 		
-		DatePicker datePicker = new DatePicker();
+		
 		
 		
 		
 		rightBox.getChildren().add(emailField);
+        rightBox.getChildren().add(emailField);
 		rightBox.getChildren().add(passwordField);
-		rightBox.getChildren().add(datePicker);
 		rightBox.setAlignment(Pos.CENTER);
 		
 		
@@ -150,10 +162,10 @@ public class PatientRegistration1 {
 		
 		
 		
-		VBox continueContainer = new VBox();
+		VBox registerContainer = new VBox();
 		
-		Button continueButton = new Button("Continue");
-		continueButton.setStyle("-fx-font-size: 14px; " +  
+		Button registerButton = new Button("Register");
+		registerButton.setStyle("-fx-font-size: 14px; " +  
 				                "-fx-padding: 10 20; " + 
 				                "-fx-border-color: black; " + 
 				                "-fx-border-width: 2; " + 
@@ -163,44 +175,49 @@ public class PatientRegistration1 {
 				                "-fx-pref-height: 20;" + 
 				                "-fx-pref-width: 150;");
 		
-		continueContainer.getChildren().add(continueButton);
-		continueContainer.setAlignment(Pos.CENTER);
+		registerContainer.getChildren().add(registerButton);
+		registerContainer.setAlignment(Pos.CENTER);
 		
-		BorderPane.setMargin(continueContainer, new Insets(0, 0, 10, 0));
+		BorderPane.setMargin(registerContainer, new Insets(0, 0, 10, 0));
 		
 		
-		patientCreation.setTop(upperHolder);
-		patientCreation.setCenter(fieldBox);
-		patientCreation.setBottom(continueContainer);
+		staffCreation.setTop(upperHolder);
+		staffCreation.setCenter(fieldBox);
+		staffCreation.setBottom(registerContainer);
 		
-		class ContinueButtonHandler implements EventHandler<ActionEvent>
+		class RegisterButtonHandler implements EventHandler<ActionEvent>
 		{
 			public void handle(ActionEvent event)
 			{
-				if(!firstNameField.getText().isEmpty() && !lastNameField.getText().isEmpty() && !phoneField.getText().isEmpty() && !emailField.getText().isEmpty() && !passwordField.getText().isEmpty() && !(datePicker.getValue() == null))
+				if(!firstNameField.getText().isEmpty() && !lastNameField.getText().isEmpty() && !employeeID.getText().isEmpty() && !emailField.getText().isEmpty() && !passwordField.getText().isEmpty() && !(datePicker.getValue() == null) && !(roleBox.getValue() == null))
 				{
 
                     String firstName = firstNameField.getText();
                     String lastName = lastNameField.getText();
-                    String phoneNumber = phoneField.getText();
                     String email = emailField.getText();
                     String password = passwordField.getText();
+
+                    String uid = employeeID.getText();
 
                     LocalDate date = datePicker.getValue();
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                     String formattedDate = date.format(formatter);
 
-					Scene patientRegistration2 = PatientRegistration2.getPatientRegistration2(currStage, firstName, lastName, phoneNumber, email, password, formattedDate);
-                    currStage.setScene(patientRegistration2);
+                    String role = roleBox.getValue();
+
+                    Staff.addStaff(firstName, lastName, formattedDate, role, uid, email, password);
+
+					Scene staffLoginScene = StaffLoginPage.getStaffLoginPage(currStage);
+                    currStage.setScene(staffLoginScene);
 				}
 			}
 		}
 		
-		ContinueButtonHandler continueHandler = new ContinueButtonHandler();
-		continueButton.setOnAction(continueHandler);
+		RegisterButtonHandler continueHandler = new RegisterButtonHandler();
+		registerButton.setOnAction(continueHandler);
 
-        Scene patientRegistration1Scene = new Scene(patientCreation, 1150, 700);
-        return patientRegistration1Scene;
+        Scene staffRegistrationScene = new Scene(staffCreation, 700, 500);
+        return staffRegistrationScene;
     }
 
 }

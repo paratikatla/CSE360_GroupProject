@@ -217,7 +217,7 @@ public class PatientRegistration2 {
 		RegisterButtonHandler registerHandler = new RegisterButtonHandler();
 		registerButton.setOnAction(registerHandler);
 
-        Scene patientRegistration2 = new Scene(patientRegistration, 700, 500);
+        Scene patientRegistration2 = new Scene(patientRegistration, 1150, 700);
         return patientRegistration2;
     }
     

@@ -1,27 +1,40 @@
-package application;
+package FrontEnd;
 
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
+import javax.swing.Action;
+
+import org.w3c.dom.events.Event;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class patientaccountsettingspage extends Application {
+import BackEnd.Patient;
 
-    @Override
-    public void start(Stage stage) {
-        stage.setTitle("Pediatric OAS - Patient Account Settings");
+public class PatientAccountSettingsPage{
+
+    private static Stage currStage;
+
+    public static Scene getPatientAccountSettingsPage(Stage stage, Patient patient) {
+
+        currStage = stage;
+
+        currStage.setTitle("Pediatric OAS - Patient Account Settings");
         
         
     	HBox header = new HBox();
@@ -67,12 +80,6 @@ public class patientaccountsettingspage extends Application {
         
         
         
-        
-        
-        
-        
-        
-        
 
         // Patient Account Settings header
        
@@ -85,11 +92,17 @@ public class patientaccountsettingspage extends Application {
         // Contact Information Section
         Label emailLabel = new Label("Email");
         TextField emailTextField = new TextField();
-        emailTextField.setPromptText("Current Email");
+
+        String currentEmail = patient.getEmail();
+
+        emailTextField.setText(currentEmail);
 
         Label phoneLabel = new Label("Phone Number");
         TextField phoneTextField = new TextField();
-        phoneTextField.setPromptText("Current Phone Number");
+
+        String currentPhone = patient.getPhoneNumber();
+
+        phoneTextField.setText(currentPhone);
 
         VBox contactInfoBox = new VBox(10, emailLabel, emailTextField, phoneLabel, phoneTextField);
         contactInfoBox.setPadding(new Insets(70));
@@ -99,20 +112,38 @@ public class patientaccountsettingspage extends Application {
         // Providers Information Section
         Label insuranceProviderLabel = new Label("Insurance Provider:");
         TextField insuranceProviderName = new TextField();
-        insuranceProviderName.setPromptText("Provider Name");
+        insuranceProviderName.setPromptText("Insurance Provider");
+
+        String currentProvider = patient.getInsuranceProvider();
+
+        insuranceProviderName.setText(currentProvider);
+
 
         TextField insuranceProviderContact = new TextField();
         insuranceProviderContact.setPromptText("Provider Contact");
 
+        String providerContact = patient.getProviderPhone();
+        insuranceProviderContact.setText(providerContact);
+
         TextField policyID = new TextField();
         policyID.setPromptText("Policy ID");
+
+        String currentPolicyID = patient.getPolicyID();
+        policyID.setText(currentPolicyID);
+
 
         Label pharmacyLabel = new Label("Pharmacy:");
         TextField pharmacyName = new TextField();
         pharmacyName.setPromptText("Provider Name");
 
+        String currentPharmacy = patient.getPharmacyName();
+        pharmacyName.setText(currentPharmacy);
+
         TextField pharmacyContact = new TextField();
         pharmacyContact.setPromptText("Provider Contact");
+
+        String currentPharmacyPhone = patient.getPharmacyPhone();
+        pharmacyContact.setText(currentPharmacyPhone);
 
         VBox providersInfoBox = new VBox(10, insuranceProviderLabel, insuranceProviderName, insuranceProviderContact, policyID, pharmacyLabel, pharmacyName, pharmacyContact);
         providersInfoBox.setPadding(new Insets(70));
@@ -126,13 +157,60 @@ public class patientaccountsettingspage extends Application {
         Button changePasswordButton = new Button("Change Password");
         changePasswordButton.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
 
+        class ChangePasswordButtonHandler implements EventHandler<ActionEvent>
+        {
+            public void handle(ActionEvent arg0)
+            {
+                Scene passwordResetScene = PasswordReset.getPasswordReset1(currStage, patient);
+                currStage.setScene(passwordResetScene);
+            }
+        }
+
+        ChangePasswordButtonHandler changePasswordButtonHandler = new ChangePasswordButtonHandler();
+        changePasswordButton.setOnAction(changePasswordButtonHandler);
+
         // Save and Cancel buttons
         Button saveChangesButton = new Button("Save Changes");
         saveChangesButton.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
 
+        class SaveChangesButtonHandler implements EventHandler<ActionEvent>
+        {
+            public void handle(ActionEvent arg0) {
+                
+                Patient.changePatientEmail(patient.getUid(), emailTextField.getText());
+                Patient.changePatientPhoneNumber(patient.getUid(), phoneTextField.getText());
+                Patient.changePatientInsuranceProvider(patient.getUid(), insuranceProviderName.getText());
+                Patient.changePatientInsuranceProviderNumber(patient.getUid(), insuranceProviderContact.getText());
+                Patient.changePatientInsurancePolicyID(patient.getUid(), policyID.getText());
+                Patient.changePatientPharmacy(patient.getUid(), pharmacyName.getText());
+                Patient.changePatientPharmacyPhoneNumber(patient.getUid(), pharmacyContact.getText());
+
+            }
+        }
+
+        SaveChangesButtonHandler saveChangesButtonHandler = new SaveChangesButtonHandler();
+        saveChangesButton.setOnAction(saveChangesButtonHandler);
+
         
         Button cancelButton = new Button("Cancel");
         cancelButton.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
+
+        class CancelButtonHandler implements EventHandler<ActionEvent>
+        {
+            public void handle(ActionEvent arg0)
+            {
+                emailTextField.setText(currentEmail);
+                phoneTextField.setText(currentPhone);
+                insuranceProviderName.setText(currentProvider);
+                insuranceProviderContact.setText(providerContact);
+                policyID.setText(currentPolicyID);
+                pharmacyName.setText(currentPharmacy);
+                pharmacyContact.setText(currentPharmacyPhone);
+            }
+        }
+
+        CancelButtonHandler cancelButtonHandler = new CancelButtonHandler();
+        cancelButton.setOnAction(cancelButtonHandler);
 
         HBox buttonsBox = new HBox(20,  cancelButton,saveChangesButton);
         buttonsBox.setAlignment(Pos.CENTER);
@@ -143,9 +221,8 @@ public class patientaccountsettingspage extends Application {
         mainLayout.setAlignment(Pos.CENTER);
 
         // Scene and Stage setup
-        Scene scene = new Scene(mainLayout, 900, 700);
-        stage.setScene(scene);
-        stage.show();
+        Scene patientAccountSettingsPage = new Scene(mainLayout, 900, 700);
+        return patientAccountSettingsPage;
     }
 
 }

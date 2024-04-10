@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -16,6 +17,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import BackEnd.Patient;
+
 
 public class PatientLoginPage {
     
@@ -60,18 +63,18 @@ public class PatientLoginPage {
 		
 		VBox loginHolder = new VBox(30);
 		
-        TextField emailTextField = new TextField();
-        emailTextField.setPromptText("Email");
-        emailTextField.setStyle("-fx-padding: 10;" + 
+        TextField uidTextField = new TextField();
+        uidTextField.setPromptText("UID");
+        uidTextField.setStyle("-fx-padding: 10;" + 
 			                    "-fx-font-size: 16px;" + 
 			                    "-fx-border-color: black;" +
 			                    "-fx-border-width: 1;" +
 			                    "-fx-border-radius: 5;" +
 			                    "-fx-pref-width: 50;" +
 			                    "-fx-pref-height: 40;");
-        emailTextField.setMaxWidth(300);
+        uidTextField.setMaxWidth(300);
 
-        TextField passwordTextField = new TextField();
+        PasswordField passwordTextField = new PasswordField();
         passwordTextField.setPromptText("Password");
         passwordTextField.setStyle("-fx-padding: 10;" +
 			 	                   "-fx-font-size: 16px;" +
@@ -94,7 +97,7 @@ public class PatientLoginPage {
 			                 "-fx-pref-width: 200;");
        
         
-        loginHolder.getChildren().add(emailTextField);
+        loginHolder.getChildren().add(uidTextField);
         loginHolder.getChildren().add(passwordTextField);
         loginHolder.getChildren().add(loginButton);
         loginHolder.setAlignment(Pos.CENTER);
@@ -183,28 +186,25 @@ public class PatientLoginPage {
 		
 		
 		
-		// class LoginButtonHandler implements EventHandler<ActionEvent>
-		// {
-		// 	public void handle(ActionEvent event)
-		// 	{
-		// 		if(loginInfo.findPatient(emailTextField.getText(), passwordTextField.getText()))
-		// 		{
-		// 			SampleSuccessfulLogin successfulLogin = new SampleSuccessfulLogin(mainApp);
-		// 			mainApp.navigateTo(successfulLogin);
-		// 		}
-		// 		else
-		// 		{
-		// 			System.out.print("Patient not found\n");
-		// 			System.out.print(emailTextField.getText() + " + " + passwordTextField.getText() + "\n");
-		// 		}
-		// 	}
-		// }
+		class LoginButtonHandler implements EventHandler<ActionEvent>
+		{
+			public void handle(ActionEvent event)
+			{
+				if(!uidTextField.getText().isEmpty() && !passwordTextField.getText().isEmpty())
+				{
+					Patient signedInPatient = Patient.patientSignIn(uidTextField.getText(), passwordTextField.getText());
+
+					Scene patientHomePageScene = PatientHomePage.getPatientHomePage(currStage, signedInPatient);
+					currStage.setScene(patientHomePageScene);
+				}
+			}
+		}
 		
-		// LoginButtonHandler loginHandler = new LoginButtonHandler();
-		// loginButton.setOnAction(loginHandler);
+		LoginButtonHandler loginHandler = new LoginButtonHandler();
+		loginButton.setOnAction(loginHandler);
 
 
-        Scene patientLoginScene = new Scene(patientLogin, 700, 500);
+        Scene patientLoginScene = new Scene(patientLogin, 1150, 700);
         return patientLoginScene;
     }
 }

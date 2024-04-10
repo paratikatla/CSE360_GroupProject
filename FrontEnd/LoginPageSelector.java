@@ -110,7 +110,7 @@ public class LoginPageSelector
 		PatientLoginButtonHandler patientButtonHandler = new PatientLoginButtonHandler();
 		patientLogin.setOnAction(patientButtonHandler);
 
-        Scene loginPageSelector = new Scene(loginPage, 700, 500);
+        Scene loginPageSelector = new Scene(loginPage, 1150, 700);
 		return loginPageSelector;
     }
     
