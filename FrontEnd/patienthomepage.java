@@ -3,7 +3,10 @@ package FrontEnd;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import javax.swing.Action;
 import javax.swing.DropMode;
+
+import org.w3c.dom.events.Event;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -90,15 +93,44 @@ public class PatientHomePage{
 
 		
 
-		Label Inbox = new Label("Inbox");
-		Inbox.setAlignment(Pos.CENTER);
-		Inbox.setPrefHeight(50);
-		Inbox.setPrefWidth(520);
-		Inbox.setStyle("-fx-border-radius: 15px");
-		Inbox.setStyle("-fx-border-color : Black");
-		TextArea InboxArea = new TextArea();
-		Button messagingphysician = new Button("Message your Physician");
-		messagingphysician.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
+		VBox inbox = new VBox(10);
+        inbox.setPadding(new Insets(25));
+        inbox.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #C1C1C1; -fx-border-radius: 5;");
+        Label inboxLabel = new Label("Inbox");
+        inbox.getChildren().add(inboxLabel);
+        inboxLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+
+        Label notificationLabel = new Label();
+
+		if(Patient.getMessageStatus(patientUID))
+		{
+			notificationLabel.setText("You have new notifications");
+		}
+		else
+		{
+			notificationLabel.setText("You have no new notifications");
+		}
+
+        notificationLabel.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white; -fx-padding: 5px;");
+        inbox.getChildren().add(notificationLabel);
+        inbox.setAlignment(Pos.CENTER);
+
+		Button messagingPhysician = new Button("Message your Physician");
+		messagingPhysician.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
+
+		class MessagePhysicianHandler implements EventHandler<ActionEvent>
+		{
+			public void handle(ActionEvent arg0)
+			{
+				Patient.changeMessageStatus(patientUID, "false");
+
+				Scene physicianMessageScene = MessagingPage.getMessagingPage(currStage, patient);
+				currStage.setScene(physicianMessageScene);
+			}
+		}
+
+		MessagePhysicianHandler messagePhysicianHandler = new MessagePhysicianHandler();
+		messagingPhysician.setOnAction(messagePhysicianHandler);
 
 		Label Prescription = new Label("Prescriptions");
 		Prescription.setAlignment(Pos.CENTER);
@@ -121,12 +153,11 @@ public class PatientHomePage{
 		Label medicinesprescribed = new Label("Medicines Prescribed");
 		Label immunizationgiven = new Label("Immunization Given");	
 		
-		VBox Inboxone = new VBox (1, Inbox, InboxArea);
 		VBox Prescriptionone = new VBox (1,Prescription,prescriptiontext);
 		
 		HBox patientone = new HBox (300,acount_settings);
 		patientone.setAlignment(Pos.TOP_LEFT);
-		VBox leftside = new VBox (25, patientone,Inboxone,messagingphysician,Prescriptionone);
+		VBox leftside = new VBox (25, patientone,inbox,messagingPhysician,Prescriptionone);
 		leftside.setPadding(new Insets(20));
 		leftside.setAlignment(Pos.CENTER);
 		

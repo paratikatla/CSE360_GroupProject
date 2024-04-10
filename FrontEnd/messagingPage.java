@@ -11,16 +11,18 @@ import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import BackEnd.Messaging;
+import BackEnd.Patient;
+import BackEnd.Staff;
 
 
 
 
 
-public class messagingPage {
+public class MessagingPage {
 
     static Stage currStage;
 
-    public Scene getMessagingPage(Stage stage, Scene scene, String uidList, String uid)
+    public static Scene getMessagingPage(Stage stage, Patient patient)
     {
         currStage = stage;
 		
@@ -33,6 +35,7 @@ public class messagingPage {
         ScrollPane scrollPane = new ScrollPane();
 
         TextFlow messageFlow = new TextFlow();
+        Messaging.initTextFlow("" + patient.getUid(), messageFlow);
 
         messageFlow.setPrefHeight(200);
         scrollPane.setContent(messageFlow);
@@ -46,7 +49,7 @@ public class messagingPage {
 
             public void handle(ActionEvent arg0) 
             {
-                Messaging.sendMessage(uid, inputField.getText().trim(), messageFlow);
+                Messaging.patientSendMessage(patient, inputField.getText().trim(), messageFlow);
                 inputField.clear();
 
                 scrollPane.layout();
@@ -61,7 +64,53 @@ public class messagingPage {
         container.getChildren().addAll(scrollPane, inputField, sendButton);
         root.setCenter(container);
 
-        Scene messagingPage = new Scene(root, 700, 500);
+        Scene messagingPage = new Scene(root, 1150, 700);
+		return messagingPage;
+    }
+
+    public static Scene getMessagingPage(Stage stage, Staff staff, String uid)
+    {
+        currStage = stage;
+		
+		currStage.setTitle("Messaging Portal");
+		
+		BorderPane root = new BorderPane();
+        VBox container = new VBox(10);
+
+
+        ScrollPane scrollPane = new ScrollPane();
+
+        TextFlow messageFlow = new TextFlow();
+        Messaging.initTextFlow(uid, messageFlow);
+
+        messageFlow.setPrefHeight(200);
+        scrollPane.setContent(messageFlow);
+        scrollPane.setFitToWidth(true);
+
+        TextField inputField = new TextField();
+        Button sendButton = new Button("Send");
+
+        class SendButtonHandler implements EventHandler<ActionEvent>
+        {
+
+            public void handle(ActionEvent arg0) 
+            {
+                Messaging.staffSendMessage(staff, uid, inputField.getText().trim(), messageFlow);
+                inputField.clear();
+
+                scrollPane.layout();
+                scrollPane.setVvalue(1.0d);
+            }
+            
+        }
+
+        SendButtonHandler sendButtonHandler = new SendButtonHandler();
+        sendButton.setOnAction(sendButtonHandler);
+
+        container.getChildren().addAll(scrollPane, inputField, sendButton);
+        root.setCenter(container);
+
+        Scene messagingPage = new Scene(root, 1150, 700);
 		return messagingPage;
     }
 

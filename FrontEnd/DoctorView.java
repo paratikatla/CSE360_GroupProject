@@ -131,7 +131,7 @@ public class DoctorView extends Application {
         borderPane.setTop(header);
         borderPane.setCenter(body);
         
-        Scene scene = new Scene(borderPane, 800, 600);
+        Scene scene = new Scene(borderPane, 1150, 700);
         primaryStage.setTitle("Hospital Portal");
         primaryStage.setScene(scene);
         primaryStage.show();

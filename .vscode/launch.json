@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "NurseViewOver12",
+            "request": "launch",
+            "mainClass": "FrontEnd.NurseViewOver12",
+            "projectName": "CSE360_GroupProject_9f68bc0f"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

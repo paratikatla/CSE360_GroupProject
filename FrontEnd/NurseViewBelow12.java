@@ -14,10 +14,17 @@ import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
-public class NurseViewBelow12 extends Application {
+import BackEnd.Staff;
+import BackEnd.Patient;
 
-    @Override
-    public void start(Stage primaryStage) {        
+public class NurseViewBelow12{
+
+    private static Stage currStage;
+
+    public static Scene getNurseViewBelow12(Stage stage, Staff nurse, Patient patient) {        
+        
+        currStage = stage;
+
         BorderPane borderPane = new BorderPane();
 
         HBox header = new HBox();
@@ -28,13 +35,13 @@ public class NurseViewBelow12 extends Application {
 
         HBox top = new HBox(20);
         VBox topLeft = new VBox();
-        Label staffInfo = new Label("Staff Name");
-        Label staffID = new Label("Employee ID");
+        Label staffInfo = new Label("Nurse " + nurse.getLastName());
+        Label staffID = new Label(nurse.getEmployeeID());
         topLeft.getChildren().addAll(staffInfo, staffID);
         
         VBox topRight = new VBox();
-        Label patientInfo = new Label("Patient Name");
-        Label patientID = new Label("Patient ID");
+        Label patientInfo = new Label(patient.getFullName());
+        Label patientID = new Label("" + patient.getUid());
         topRight.getChildren().addAll(patientInfo, patientID);
         top.getChildren().addAll(topLeft, topRight);
         top.setAlignment(Pos.CENTER_LEFT);
@@ -105,13 +112,12 @@ public class NurseViewBelow12 extends Application {
         borderPane.setTop(header);
         borderPane.setCenter(body);
         
-        Scene scene = new Scene(borderPane, 800, 600);
-        primaryStage.setTitle("Hospital Portal");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        currStage.setTitle("Hospital Portal");
+
+        Scene scene = new Scene(borderPane, 1150, 700);
+        return scene;
+        
+        
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
 }

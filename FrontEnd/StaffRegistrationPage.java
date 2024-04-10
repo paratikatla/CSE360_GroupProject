@@ -149,7 +149,7 @@ public class StaffRegistrationPage
 		
 		
 		
-		rightBox.getChildren().add(emailField);
+		rightBox.getChildren().add(employeeID);
         rightBox.getChildren().add(emailField);
 		rightBox.getChildren().add(passwordField);
 		rightBox.setAlignment(Pos.CENTER);
@@ -216,7 +216,8 @@ public class StaffRegistrationPage
 		RegisterButtonHandler continueHandler = new RegisterButtonHandler();
 		registerButton.setOnAction(continueHandler);
 
-        Scene staffRegistrationScene = new Scene(staffCreation, 700, 500);
+
+        Scene staffRegistrationScene = new Scene(staffCreation, 1150, 700);
         return staffRegistrationScene;
     }
 

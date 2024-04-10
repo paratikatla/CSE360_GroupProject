@@ -1,6 +1,7 @@
 package FrontEnd;
 
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,30 +14,18 @@ import java.time.format.DateTimeFormatter;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
-public class StaffViewHome extends Application {
+import BackEnd.Staff;
+import BackEnd.Util;
+import BackEnd.Patient;
+
+public class StaffViewHome{
     
-    private class Backend {
-        Patient getPatient(String firstName, String lastName, String dateOfBirth) {
-            return new Patient("John Doe", "01/01/2000", "johndoe01012000");
-        }
-    }
+    private static Stage currStage;
     
-    private class Patient {
-        String name;
-        String birthdate;
-        String id;
+    public static Scene getStaffHomeView(Stage stage, Staff staff) {
         
-        Patient(String name, String birthdate, String id) {
-            this.name = name;
-            this.birthdate = birthdate;
-            this.id = id;
-        }
-    }
-    
-    @Override
-    public void start(Stage primaryStage) {
-        Backend backend = new Backend();
-        
+        currStage = stage;
+
         BorderPane borderPane = new BorderPane();
         
         HBox header = new HBox();
@@ -47,8 +36,8 @@ public class StaffViewHome extends Application {
 
         HBox top = new HBox(20);
         VBox topLeft = new VBox();
-        Label staffInfo = new Label("Staff Name");
-        Label staffID = new Label("Employee ID");
+        Label staffInfo = new Label(staff.getFullName());
+        Label staffID = new Label(staff.getEmployeeID());
         topLeft.getChildren().addAll(staffInfo, staffID);
         
         top.getChildren().addAll(topLeft);
@@ -84,15 +73,15 @@ public class StaffViewHome extends Application {
         searchArea.setAlignment(Pos.CENTER);
         searchArea.setVgap(10);
         searchArea.setHgap(10);
-        TextField firstNameField = new TextField();
-        TextField lastNameField = new TextField();
-        DatePicker datePicker = new DatePicker();
-        searchArea.add(new Label("First Name:"), 0, 0);
-        searchArea.add(firstNameField, 1, 0);
-        searchArea.add(new Label("Last Name:"), 0, 1);
-        searchArea.add(lastNameField, 1, 1);
-        searchArea.add(new Label("Date of Birth:"), 0, 2);
-        searchArea.add(datePicker, 1, 2);
+        TextField patientUIDField = new TextField();
+        // TextField lastNameField = new TextField();
+        // DatePicker datePicker = new DatePicker();
+        searchArea.add(new Label("Patient UID :"), 0, 0);
+        searchArea.add(patientUIDField, 1, 0);
+        // searchArea.add(new Label("Last Name:"), 0, 1);
+        // searchArea.add(lastNameField, 1, 1);
+        // searchArea.add(new Label("Date of Birth:"), 0, 2);
+        // searchArea.add(datePicker, 1, 2);
         Button searchButton = new Button("Search");
         searchButton.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
         searchButton.setMaxWidth(111);
@@ -118,18 +107,51 @@ public class StaffViewHome extends Application {
         newAppointmentButton.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
         newAppointmentButton.setAlignment(Pos.CENTER);
 
+
         searchButton.setOnAction(event -> {
-       
-            Patient patient = backend.getPatient(
-                firstNameField.getText(),
-                lastNameField.getText(),
-                datePicker.getValue().toString()
-            );
-            patientInfoLabel.setText("Patient Information");
-            patientNameLabel.setText("Name: " + patient.name);
-            patientBirthdateLabel.setText("Patient Birthdate: " + patient.birthdate);
-            patientIDLabel.setText("Patient ID: " + patient.id);
+
+            if(!patientUIDField.getText().isEmpty())
+            {
+                String uid = patientUIDField.getText();
+
+                patientInfoLabel.setText("Patient Information");
+                patientNameLabel.setText("Name: " + Patient.getFullNameByID(uid));
+                patientBirthdateLabel.setText("Patient Birthdate: " + Patient.getDOBByID(uid));
+                patientIDLabel.setText("Patient ID: " + uid);
+            }
         });
+
+        class NewButtonAppointmentHandler implements EventHandler<ActionEvent>
+        {
+            public void handle(ActionEvent arg0)
+            {
+                if(!patientIDLabel.getText().isEmpty())
+                {
+                    if(staff.getRole().equals("Nurse"))
+                    {
+                        System.out.print("oeijwd");
+                        String patientUID = patientIDLabel.getText().substring(12);
+                        String dob = Patient.getDOBByID(patientUID);
+
+                        boolean olderThan12 = Util.isOlderThan12Years(dob);
+
+                        if(olderThan12)
+                        {
+                            Scene nurseSceneOver12 = NurseViewOver12.getNurseViewOver12Scene(currStage, staff, Patient.grabPatient(patientUID));
+                            currStage.setScene(nurseSceneOver12);
+                        }
+                        else
+                        {
+                            Scene nurseSceneUnder12 = NurseViewBelow12.getNurseViewBelow12(stage, staff, Patient.grabPatient(patientUID));
+                            currStage.setScene(nurseSceneUnder12);
+                        }
+                    }
+                }
+            }
+        }
+
+        NewButtonAppointmentHandler newButtonAppointmentHandler = new NewButtonAppointmentHandler();
+        newAppointmentButton.setOnAction(newButtonAppointmentHandler);
         
         VBox patientInfoDisplay = new VBox(10);
         patientInfoDisplay.setPadding(new Insets(10));
@@ -150,16 +172,73 @@ public class StaffViewHome extends Application {
         Label inboxLabel = new Label("Inbox");
         inbox.getChildren().add(inboxLabel);
         inboxLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
-        Label notificationLabel = new Label("You have new notifications");
+
+        int numMessages = Staff.getNumMessages(staff.getEmployeeID());
+        String notificationText = "";
+
+        if(numMessages > 0)
+        {
+            notificationText = "You have " + numMessages + " unread messages";
+        }
+        else
+        {
+            notificationText = "You have no new notifications";
+        }
+
+        Label notificationLabel = new Label(notificationText);
         notificationLabel.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white; -fx-padding: 5px;");
         inbox.getChildren().add(notificationLabel);
-        Button message1Button = new Button("Message 1");
-        message1Button.setMaxWidth(130);
-        Button message2Button = new Button("Message 2");
-        message2Button.setMaxWidth(130);
-        Button message3Button = new Button("Message 3");
-        message3Button.setMaxWidth(130);
-        inbox.getChildren().addAll(message1Button, message2Button, message3Button);
+
+        ObservableList<String> messageList = Staff.getMessageList(staff.getEmployeeID());
+
+        class OpenMessageButtonHandler implements EventHandler<ActionEvent>
+        {
+            Button button;
+
+            OpenMessageButtonHandler(Button button, ObservableList<String> messageList)
+            {
+                this.button = button;
+            }
+
+            public void handle(ActionEvent arg0)
+            {
+
+                messageList.removeIf((uid -> {
+                    boolean match = uid.equals((String)button.getUserData());
+
+                    System.out.print(uid + "\n");
+                    System.out.print((String)button.getUserData() + "\n");
+
+                    if(match)
+                    {
+                        System.out.print("a\n");
+                        Staff.reduceNumMessages(staff.getEmployeeID());
+                    }
+
+                    return match;
+                }));
+
+                String newMessageList = String.join(" ", messageList);
+
+                Staff.changeMessageList(staff.getEmployeeID(), newMessageList);
+
+                Scene messageScene = MessagingPage.getMessagingPage(stage, staff, (String)button.getUserData());
+                currStage.setScene(messageScene);
+            }
+        }
+
+        for(int i = 0; i < numMessages; i++)
+        {
+            String uid = messageList.get(i);
+            Button messageButton = new Button(Patient.getFullNameByID(uid));
+            messageButton.setUserData(uid);
+
+            OpenMessageButtonHandler openMessageButtonHandler = new OpenMessageButtonHandler(messageButton, messageList);
+            messageButton.setOnAction(openMessageButtonHandler);
+
+            inbox.getChildren().add(messageButton);
+        }
+
         inbox.setAlignment(Pos.CENTER);
         
         VBox appointments = new VBox();
@@ -177,13 +256,9 @@ public class StaffViewHome extends Application {
         borderPane.setTop(header);
         borderPane.setCenter(mainContent);
         
-        Scene scene = new Scene(borderPane, 824, 558);
-        primaryStage.setTitle("Staff Home Portal");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-    }
-    
-    public static void main(String[] args) {
-        launch(args);
+        Scene scene = new Scene(borderPane, 1150, 700);
+        currStage.setTitle("Staff Home Portal");
+        
+        return scene;
     }
 }

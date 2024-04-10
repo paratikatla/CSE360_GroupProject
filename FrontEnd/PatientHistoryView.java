@@ -80,7 +80,7 @@ public class PatientHistoryView extends Application {
         VBox rootLayout = new VBox(10);
         rootLayout.getChildren().addAll(header, bottom);
 
-        Scene scene = new Scene(rootLayout, 1000, 600);
+        Scene scene = new Scene(rootLayout, 1150, 700);
         primaryStage.setTitle("Pediatric OAS - Patient History");
         primaryStage.setScene(scene);
         primaryStage.show();

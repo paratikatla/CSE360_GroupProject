@@ -174,12 +174,33 @@ public class StaffLoginPage {
 				if(!uidTextField.getText().isEmpty() && !passwordTextField.getText().isEmpty())
 				{
 					Staff signedInStaff = Staff.staffSignIn(uidTextField.getText(), passwordTextField.getText());
+
+					if(signedInStaff != null)
+					{
+						Scene staffHomeScene = StaffViewHome.getStaffHomeView(currStage, signedInStaff);
+						currStage.setScene(staffHomeScene);
+					}
+					
 				}
 			}
 		}
 
 		StaffLoginButtonHandler staffLoginButtonHandler = new StaffLoginButtonHandler();
 		loginButton.setOnAction(staffLoginButtonHandler);
+
+		class CreateStaffAccountHandler implements EventHandler<ActionEvent>
+		{
+
+			public void handle(ActionEvent arg0) 
+			{
+				Scene staffRegistrationScene = StaffRegistrationPage.getStaffRegistrationPage(currStage);
+				currStage.setScene(staffRegistrationScene);
+			}
+			
+		}
+
+		CreateStaffAccountHandler createStaffAccountHandler = new CreateStaffAccountHandler();
+		createAccountButton.setOnAction(createStaffAccountHandler);
 
         Scene staffLoginScene = new Scene(staffLogin, 1150, 700);
         return staffLoginScene;

@@ -13,10 +13,19 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-public class NurseViewOver12 extends Application {
+import BackEnd.Staff;
+import BackEnd.Patient;
 
-    @Override
-    public void start(Stage primaryStage) {        
+public class NurseViewOver12{
+
+    private static Stage currStage;
+
+    public static Scene getNurseViewOver12Scene(Stage stage, Staff nurse, Patient patient) { 
+        
+        currStage = stage;
+
+        currStage.setTitle("Patient Intake Form");
+
         BorderPane borderPane = new BorderPane();
 
         HBox header = new HBox();
@@ -27,13 +36,13 @@ public class NurseViewOver12 extends Application {
 
         HBox top = new HBox(20);
         VBox topLeft = new VBox();
-        Label staffInfo = new Label("Staff Name");
-        Label staffID = new Label("Employee ID");
+        Label staffInfo = new Label("Nurse " + nurse.getLastName());
+        Label staffID = new Label(nurse.getEmployeeID());
         topLeft.getChildren().addAll(staffInfo, staffID);
         
         VBox topRight = new VBox();
-        Label patientInfo = new Label("Patient Name");
-        Label patientID = new Label("Patient ID");
+        Label patientInfo = new Label(patient.getFullName());
+        Label patientID = new Label("" + patient.getUid());
         topRight.getChildren().addAll(patientInfo, patientID);
         top.getChildren().addAll(topLeft, topRight);
         top.setAlignment(Pos.CENTER_LEFT);
@@ -111,15 +120,17 @@ public class NurseViewOver12 extends Application {
         submitButton.setPrefWidth(111);
         Button viewHistoryButton = new Button("View Patient History");
         viewHistoryButton.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
-        viewHistoryButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Stage patientHistoryStage = new Stage();
+        
+        // viewHistoryButton.setOnAction(new EventHandler<ActionEvent>() {
+        //     @Override
+        //     public void handle(ActionEvent event) {
+        //         Stage patientHistoryStage = new Stage();
 
-                PatientHistoryView patientHistory = new PatientHistoryView();
-                patientHistory.start(patientHistoryStage); // Start the second application in a new window
-            }
-        });
+        //         PatientHistoryView patientHistory = new PatientHistoryView();
+        //         patientHistory.start(patientHistoryStage); // Start the second application in a new window
+        //     }
+        // });
+
         HBox clicks = new HBox(30, submitButton, viewHistoryButton);
         clicks.setAlignment(Pos.CENTER);
         clicks.setPadding(new Insets(0,0,20,0));
@@ -133,13 +144,9 @@ public class NurseViewOver12 extends Application {
         borderPane.setTop(header);
         borderPane.setCenter(body);
         
-        Scene scene = new Scene(borderPane, 800, 600);
-        primaryStage.setTitle("Hospital Portal");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        Scene scene = new Scene(borderPane, 1150, 700);
+        
+        return scene;
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
 }

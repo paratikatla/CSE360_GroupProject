@@ -187,7 +187,7 @@ public class PatientRegistration1 {
                     String password = passwordField.getText();
 
                     LocalDate date = datePicker.getValue();
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
                     String formattedDate = date.format(formatter);
 
 					Scene patientRegistration2 = PatientRegistration2.getPatientRegistration2(currStage, firstName, lastName, phoneNumber, email, password, formattedDate);

@@ -86,6 +86,18 @@ public class PatientAccountSettingsPage{
         Button homeButton = new Button("Back to Home");
         homeButton.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
        
+        class HomeButtonHandler implements EventHandler<ActionEvent>
+        {
+            public void handle(ActionEvent arg0)
+            {
+                Scene patientHomeScene = PatientHomePage.getPatientHomePage(currStage, patient);
+                currStage.setScene(patientHomeScene);
+            }
+        }
+
+        HomeButtonHandler homeButtonHandler = new HomeButtonHandler();
+        homeButton.setOnAction(homeButtonHandler);
+
         HBox headerBox = new HBox(220, homeButton);
         headerBox.setAlignment(Pos.TOP_RIGHT);
 
