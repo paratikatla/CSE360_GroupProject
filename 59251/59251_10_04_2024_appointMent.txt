@@ -1,2 +1,15 @@
 Name: Pranav Aratikatla
 Date: 10/04/2024
+Nurse: Roman Goralski
+NurseExam: 
+Allergies:None
+ Health Concerns:None
+ Weight:230.0
+Height:72.0
+ BodyTemp:98.6
+ BloodPressure:30.0
+Doctor: Rose Geisler
+DoctorExam: 
+ Notes:NOne
+Prescription:
+Quantity: 

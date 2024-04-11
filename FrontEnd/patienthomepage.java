@@ -2,6 +2,7 @@ package FrontEnd;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 import javax.swing.Action;
 import javax.swing.DropMode;
@@ -16,6 +17,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -23,7 +25,9 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import BackEnd.Appointment;
 import BackEnd.Patient;
+import BackEnd.PatientAppointmentHistory;
 
 public class PatientHomePage{
 
@@ -147,11 +151,57 @@ public class PatientHomePage{
 		appointments.setPrefWidth(520);
 		appointments.setStyle("-fx-border-radius: 15px");
 		appointments.setStyle("-fx-border-color : Black");
-		TextArea appointmentsArea = new TextArea();
+		ScrollPane appointmentsArea = new ScrollPane();
+
+		PatientAppointmentHistory appointmentHistory = new PatientAppointmentHistory("" + patient.getUid());
+		ArrayList<Appointment> history = appointmentHistory.getHistory();
+
+		VBox appointmentContainer = new VBox(10);
+
+		ScrollPane appointmentData = new ScrollPane();
+
+
 		Label appointmentsummery = new Label("Appointment summery for MM/DD/YYYY");
 		Label doctorsnote = new Label("Doctor's Notes");
 		Label medicinesprescribed = new Label("Medicines Prescribed");
-		Label immunizationgiven = new Label("Immunization Given");	
+		
+
+
+		class AppointmentButtonHandler implements EventHandler<ActionEvent>
+		{
+			private Appointment appointment;
+
+			public AppointmentButtonHandler(Appointment appointment)
+			{
+				this.appointment = appointment;
+			}
+			public void handle(ActionEvent e)
+			{
+				appointmentsummery.setText("Appointment summary for " + appointment.getDate() + " : ");
+				doctorsnote.setText("Doctor's Notes : \n" + appointment.getDocExam().getNotes());
+				medicinesprescribed.setText("Medicines Prescribed : \n" + appointment.getDocExam().getPrescription());
+			}
+		}
+
+		System.out.println("HISTORY SIZE : " + history.size() + "\n");
+
+		for(int i = 0; i < history.size(); i++)
+		{
+			Appointment appointment = history.get(i);
+
+			System.out.println(appointment.getDate());
+
+			Button appointmentButton = new Button(appointment.getDate());
+
+			AppointmentButtonHandler appointmentButtonHandler = new AppointmentButtonHandler(appointment);
+			appointmentButton.setOnAction(appointmentButtonHandler);
+
+			appointmentContainer.getChildren().add(appointmentButton);
+		}
+		
+		appointmentContainer.setAlignment(Pos.CENTER);
+
+		appointmentsArea.setContent(appointmentContainer);
 		
 		VBox Prescriptionone = new VBox (1,Prescription,prescriptiontext);
 		
@@ -163,15 +213,17 @@ public class PatientHomePage{
 		
 		
 		
-		VBox Summary = new VBox(40,doctorsnote,medicinesprescribed,immunizationgiven);
+		VBox Summary = new VBox(40,doctorsnote,medicinesprescribed);
 		Summary.setPrefHeight(100);
 		Summary.setPrefWidth(500);
 		Summary.setStyle("-fx-border-radius: 25px");
 		Summary.setStyle("-fx-border-color : Black");
 		Summary.setAlignment(Pos.TOP_LEFT);
+
+		appointmentData.setContent(Summary);
 		
 		
-		
+
 		
 		VBox Appointmentsone = new VBox (0,appointments,appointmentsArea);
 		Appointmentsone.setAlignment(Pos.CENTER);

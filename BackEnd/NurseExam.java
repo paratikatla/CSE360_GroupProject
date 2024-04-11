@@ -61,12 +61,31 @@ public class NurseExam {
         this.height = height;
         this.bodyTemp = bodyTemp;
         this.bloodPressure = bloodPressure;
+
+        if(allergies.isEmpty())
+        {
+            this.allergies = "None";
+        }
+        this.healthConcerns = healthConcerns;
+        if(healthConcerns.isEmpty())
+        {
+            this.healthConcerns = "None";
+        }
+        
         this.u12 = false;
     }
 
     public NurseExam(String allergies, String healthConcerns) {
         this.allergies = allergies;
+        if(allergies.isEmpty())
+        {
+            this.allergies = "None";
+        }
         this.healthConcerns = healthConcerns;
+        if(healthConcerns.isEmpty())
+        {
+            this.healthConcerns = "None";
+        }
         this.u12 = true;
     }
 

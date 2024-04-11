@@ -180,16 +180,21 @@ public class Staff {
         this.lastName = lastName;
         this.dob = dob;
         this.staffEmail = staffEmail;
-        this.messages = getMessageList(employeeID);
-        this.numMessages = getNumMessages(employeeID);
 
-        messages.addListener((ListChangeListener<String>) change -> {
-            while (change.next()) {
-                if (change.wasAdded() || change.wasRemoved()) {
-                    numMessages += 1;
+        if(employeeID != null)
+        {
+            this.messages = getMessageList(employeeID);
+            this.numMessages = getNumMessages(employeeID);
+
+            messages.addListener((ListChangeListener<String>) change -> {
+                while (change.next()) {
+                    if (change.wasAdded() || change.wasRemoved()) {
+                        numMessages += 1;
+                    }
                 }
-            }
-        });
+            });
+        }
+        
     }
     
     public static void addStaff(String firstName, String lastName, String dob, String role, String employeeID, String staffEmail, String password)

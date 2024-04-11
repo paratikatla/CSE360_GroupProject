@@ -113,8 +113,9 @@ public class DoctorView{
 
         Button submitAppointmentDetails = new Button("Submit Appointment Details");
         submitAppointmentDetails.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
+
         
-        VBox body_left = new VBox(40, note, clicks);
+        VBox body_left = new VBox(40, note, clicks, submitAppointmentDetails);
         body_left.setAlignment(Pos.CENTER);
         body_left.setPadding(new Insets(10));
         body_left.setMaxHeight(300);

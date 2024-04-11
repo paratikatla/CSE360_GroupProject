@@ -136,13 +136,15 @@ public class StaffViewHome{
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
                     String formatedDate = now.format(formatter);
 
-                    Appointment appointment = new Appointment(Patient.grabPatient(patientUID), formatedDate);
+                    
 
                     if(staff.getRole().equals("Nurse"))
                     {
                         String dob = Patient.getDOBByID(patientUID);
 
                         boolean olderThan12 = Util.isOlderThan12Years(dob);
+
+                        Appointment appointment = new Appointment(Patient.grabPatient(patientUID), formatedDate);
 
                         if(olderThan12)
                         {
@@ -158,6 +160,15 @@ public class StaffViewHome{
 
                     if(staff.getRole().equals("Doctor"))
                     {
+
+                        String patientDirectoryPath = "./" + patientUID + "/";
+
+                        String formattedDate = formatedDate.replace("/", "_");
+
+                        String patientFilePath = patientDirectoryPath + patientUID + "_" + formattedDate + "_appointMent.txt";
+
+                        Appointment appointment = new Appointment(patientFilePath, patientUID);
+
                         Scene doctorAppointmentScene = DoctorView.getDoctorView(currStage, staff, Patient.grabPatient(patientUID), appointment);
                         currStage.setScene(doctorAppointmentScene);
                     }
@@ -185,8 +196,12 @@ public class StaffViewHome{
         inbox.setPadding(new Insets(25));
         inbox.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #C1C1C1; -fx-border-radius: 5;");
         Label inboxLabel = new Label("Inbox");
-        inbox.getChildren().add(inboxLabel);
         inboxLabel.setStyle("-fx-font-size: 16px; -fx-font-weight: bold;");
+
+        ScrollPane inboxPane = new ScrollPane();
+
+        VBox container = new VBox(10);
+        container.getChildren().add(inboxLabel);
 
         int numMessages = Staff.getNumMessages(staff.getEmployeeID());
         String notificationText = "";
@@ -255,6 +270,10 @@ public class StaffViewHome{
         }
 
         inbox.setAlignment(Pos.CENTER);
+
+        container.getChildren().add(inbox);
+
+        inboxPane.setContent(container);
         
         VBox appointments = new VBox();
         inbox.setPadding(new Insets(25));

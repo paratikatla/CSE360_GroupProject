@@ -15,7 +15,6 @@ public class Appointment {
     private NurseExam nurseExam;
     private DoctorExam docExam;
 
-
     public Staff getDoctor() {
         return doctor;
     }
@@ -70,14 +69,19 @@ public class Appointment {
         createAppointmentFile();
     }
 
-    public Appointment(String fileName){
+    public Appointment(String fileName, String uid){
+
+        this.patient = Patient.grabPatient(uid);
+        this.nurse = new Staff(null, null, null, null, null, null);
+        this.doctor = new Staff(null, null, null, null, null, null);
+
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) { 
             String line;
             while ((line = reader.readLine()) != null) {
                 if(line.startsWith("Name: ")){
                     String name = line.substring(line.indexOf(':') + 2);
                     this.patient.setFullName(name);
-                    this.patient.setUid(Integer.parseInt(fileName.substring(0, 4)));
+                    this.patient.setUid(Integer.parseInt(uid));
                 }
                 else if(line.startsWith(("Date: "))){
                     String date = line.substring(line.indexOf(':') + 2);
@@ -101,7 +105,7 @@ public class Appointment {
                     double bodyTemp = Double.parseDouble(line.trim().substring("BodyTemp:".length()));
                     line = reader.readLine();
                     double bloodPressure = Double.parseDouble(line.trim().substring("BloodPressure:".length()));
-                    nurseExam = new NurseExam(allergies, healthConcerns, weight, height, bodyTemp, bloodPressure);           
+                    this.nurseExam = new NurseExam(allergies, healthConcerns, weight, height, bodyTemp, bloodPressure);           
                 }else if(line.startsWith(("NurseExam(Under12): "))){
                     line = reader.readLine();
                     String allergies12 = line.trim().substring("Allergies:".length());
@@ -115,7 +119,7 @@ public class Appointment {
                     String prescription = line.trim().substring("Prescription:".length());
                     line = reader.readLine();
                     String prescriptionQuantity = line.trim().substring("Quantity:".length());
-                    docExam = new DoctorExam(notes, prescription, prescriptionQuantity);
+                    this.docExam = new DoctorExam(notes, prescription, prescriptionQuantity);
 
                 }
             }
