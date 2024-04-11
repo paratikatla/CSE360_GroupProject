@@ -798,34 +798,5 @@
         stage.setScene(sc stage.show();
     }
 
-        // Scene and Stage setup
-        Scene scene = new Scene(mainLayout, 900, 600);
-        stage.setScene(sc stage.show();
-    }
-
-        // Scene and Stage setup
-        Scene scene = new Scene(mainLayout, 900, 600);
-        stage.setScene(sc stage.show();
-    }
-
-        // Scene and Stage setup
-        Scene scene = new Scene(mainLayout, 900, 600);
-        stage.setScene(sc stage.show();
-    }
-
-        // Scene and Stage setup
-        Scene scene = new Scene(mainLayout, 900, 600);
-        stage.setScene(sc stage.show();
-    }
-
-        // Scene and Stage setup
-        Scene scene = new Scene(mainLayout, 900, 600);
-        stage.setScene(sc stage.show();
-    }
-
-        // Scene and Stage setup
-        Scene scene = new Scene(mainLayout, 900, 600);
-        stage.setScene(sc stage.show();
-    }
 
         
