@@ -97,14 +97,22 @@ public class StaffViewHome{
         Button viewHistoryButton = new Button("View Patient History");
         viewHistoryButton.setStyle("-fx-background-color: #70AD47; -fx-text-fill: white;");
         viewHistoryButton.setAlignment(Pos.CENTER);
-        viewHistoryButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Stage patientHistoryStage = new Stage();
-                PatientHistoryView patientHistory = new PatientHistoryView();
-                patientHistory.start(patientHistoryStage); // Start the second application in a new window
+
+        class ViewHistoryButtonHandler implements EventHandler<ActionEvent>
+        {
+            public void handle(ActionEvent e)
+            {
+                if(!patientIDLabel.getText().isEmpty())
+                {
+                    Scene patientHistoryViewScene = PatientHistoryView.getPatientHistoryView(currStage, staff, patientUIDField.getText());
+                    currStage.setScene(patientHistoryViewScene);
+                }
             }
-        });
+        }
+
+        ViewHistoryButtonHandler viewHistoryButtonHandler = new ViewHistoryButtonHandler();
+        viewHistoryButton.setOnAction(viewHistoryButtonHandler);
+
         Button newAppointmentButton = new Button("Begin New Appointment");
         newAppointmentButton.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
         newAppointmentButton.setAlignment(Pos.CENTER);

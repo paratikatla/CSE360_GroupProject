@@ -11,5 +11,5 @@ Height:72.0
 Doctor: Rose Geisler
 DoctorExam: 
  Notes:NOne
-Prescription:
-Quantity: 
+Prescription: Ibuprofen
+Quantity: 2

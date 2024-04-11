@@ -141,15 +141,17 @@ public class NurseViewOver12{
         SubmitButtonHandler submitButtonHandler = new SubmitButtonHandler();
         submitButton.setOnAction(submitButtonHandler);
         
-        // viewHistoryButton.setOnAction(new EventHandler<ActionEvent>() {
-        //     @Override
-        //     public void handle(ActionEvent event) {
-        //         Stage patientHistoryStage = new Stage();
+        class ViewHistoryButtonHandler implements EventHandler<ActionEvent>
+        {
+            public void handle(ActionEvent e)
+            {
+                Scene patientHistoryViewScene = PatientHistoryView.getPatientHistoryView(currStage, nurse, "" + appointment.getPatient().getUid());
+                currStage.setScene(patientHistoryViewScene);
+            }
+        }
 
-        //         PatientHistoryView patientHistory = new PatientHistoryView();
-        //         patientHistory.start(patientHistoryStage); // Start the second application in a new window
-        //     }
-        // });
+        ViewHistoryButtonHandler viewHistoryButtonHandler = new ViewHistoryButtonHandler();
+        viewHistoryButton.setOnAction(viewHistoryButtonHandler);
 
         HBox clicks = new HBox(30, submitButton, viewHistoryButton);
         clicks.setAlignment(Pos.CENTER);

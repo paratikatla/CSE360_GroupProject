@@ -111,8 +111,8 @@ public class Appointment {
                     String allergies12 = line.trim().substring("Allergies:".length());
                     line = reader.readLine();
                     String healthConcerns12 = line.trim().substring("Health Concerns:".length());
-                    nurseExam = new NurseExam(allergies12, healthConcerns12);
-                }else if(line.startsWith(("DoctoreExam: "))){
+                    this.nurseExam = new NurseExam(allergies12, healthConcerns12);
+                }else if(line.startsWith(("DoctorExam: "))){
                     line = reader.readLine();
                     String notes = line.trim().substring("Notes:".length());
                     line = reader.readLine();

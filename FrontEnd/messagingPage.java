@@ -10,6 +10,10 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+
+import javax.swing.Action;
+
 import BackEnd.Messaging;
 import BackEnd.Patient;
 import BackEnd.Staff;
@@ -61,7 +65,22 @@ public class MessagingPage {
         SendButtonHandler sendButtonHandler = new SendButtonHandler();
         sendButton.setOnAction(sendButtonHandler);
 
-        container.getChildren().addAll(scrollPane, inputField, sendButton);
+        Button backButton = new Button("Back to Home Page");
+
+        class BackButtonHandler implements EventHandler<ActionEvent>
+        {
+            public void handle(ActionEvent e)
+            {
+                Scene patientHomeScene = PatientHomePage.getPatientHomePage(currStage, patient);
+                currStage.setScene(patientHomeScene);
+            }
+        }
+
+        BackButtonHandler backButtonHandler = new BackButtonHandler();
+        backButton.setOnAction(backButtonHandler);
+
+        container.getChildren().addAll(scrollPane, inputField, sendButton, backButton);
+        container.setAlignment(Pos.CENTER);
         root.setCenter(container);
 
         Scene messagingPage = new Scene(root, 1150, 700);
@@ -107,7 +126,22 @@ public class MessagingPage {
         SendButtonHandler sendButtonHandler = new SendButtonHandler();
         sendButton.setOnAction(sendButtonHandler);
 
-        container.getChildren().addAll(scrollPane, inputField, sendButton);
+        Button backButton = new Button("Back to Home Page");
+
+        class BackButtonHandler implements EventHandler<ActionEvent>
+        {
+            public void handle(ActionEvent e)
+            {
+                Scene staffHomeScene = StaffViewHome.getStaffHomeView(stage, staff);
+                currStage.setScene(staffHomeScene);
+            }
+        }
+
+        BackButtonHandler backButtonHandler = new BackButtonHandler();
+        backButton.setOnAction(backButtonHandler);
+
+        container.getChildren().addAll(scrollPane, inputField, sendButton, backButton);
+        container.setAlignment(Pos.CENTER);
         root.setCenter(container);
 
         Scene messagingPage = new Scene(root, 1150, 700);

@@ -180,6 +180,8 @@ public class PatientHomePage{
 				appointmentsummery.setText("Appointment summary for " + appointment.getDate() + " : ");
 				doctorsnote.setText("Doctor's Notes : \n" + appointment.getDocExam().getNotes());
 				medicinesprescribed.setText("Medicines Prescribed : \n" + appointment.getDocExam().getPrescription());
+				appointmentData.layout();
+        		appointmentData.setVvalue(1.0d);
 			}
 		}
 

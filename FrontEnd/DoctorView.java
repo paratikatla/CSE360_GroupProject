@@ -99,15 +99,19 @@ public class DoctorView{
 
         Button PatientHistory = new Button("View Patient History");
         PatientHistory.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
-        PatientHistory.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Stage patientHistoryStage = new Stage();
 
-                PatientHistoryView patientHistory = new PatientHistoryView();
-                patientHistory.start(patientHistoryStage);
+        class ViewHistoryButtonHandler implements EventHandler<ActionEvent>
+        {
+            public void handle(ActionEvent e)
+            {
+                Scene patientHistoryViewScene = PatientHistoryView.getPatientHistoryView(currStage, doctor, "" + appointment.getPatient().getUid());
+                currStage.setScene(patientHistoryViewScene);
             }
-        });
+        }
+
+        ViewHistoryButtonHandler viewHistoryButtonHandler = new ViewHistoryButtonHandler();
+        PatientHistory.setOnAction(viewHistoryButtonHandler);
+
         HBox clicks = new HBox(20, nurseNotes, PatientHistory);
         clicks.setAlignment(Pos.CENTER);
 
@@ -156,11 +160,13 @@ public class DoctorView{
         {
             private String medList;
             private String numMeds;
+            private MenuButton list;
 
-            public SubmitButtonHandler(String x, String y)
+            public SubmitButtonHandler(String x, String y, MenuButton list)
             {
                 this.medList = x;
                 this.numMeds = y;
+                this.list = list;
             }
 
             public void handle(ActionEvent e)
@@ -179,7 +185,7 @@ public class DoctorView{
             }
         }
 
-        SubmitButtonHandler submitButtonHandler = new SubmitButtonHandler(medList, numMeds);
+        SubmitButtonHandler submitButtonHandler = new SubmitButtonHandler(medList, numMeds, list);
         submit.setOnAction(submitButtonHandler);
 
         class SubmitAppointmentDetailsHandler implements EventHandler<ActionEvent>

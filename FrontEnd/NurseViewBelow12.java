@@ -110,14 +110,19 @@ public class NurseViewBelow12{
 
         Button viewHistoryButton = new Button("View Patient History");
         viewHistoryButton.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
-        // viewHistoryButton.setOnAction(new EventHandler<ActionEvent>() {
-        //     @Override
-        //     public void handle(ActionEvent event) {
-        //         Stage patientHistoryStage = new Stage();
-        //         PatientHistoryView patientHistory = new PatientHistoryView();
-        //         patientHistory.start(patientHistoryStage);
-        //     }
-        // });
+
+        class ViewHistoryButtonHandler implements EventHandler<ActionEvent>
+        {
+            public void handle(ActionEvent e)
+            {
+                Scene patientHistoryViewScene = PatientHistoryView.getPatientHistoryView(currStage, nurse, "" + appointment.getPatient().getUid());
+                currStage.setScene(patientHistoryViewScene);
+            }
+        }
+
+        ViewHistoryButtonHandler viewHistoryButtonHandler = new ViewHistoryButtonHandler();
+        viewHistoryButton.setOnAction(viewHistoryButtonHandler);
+
         HBox clicks = new HBox(30, submitButton, viewHistoryButton);
         clicks.setPadding(new Insets(0,0,20,0));
         clicks.setAlignment(Pos.CENTER);

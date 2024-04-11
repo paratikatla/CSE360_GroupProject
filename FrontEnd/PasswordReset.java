@@ -95,11 +95,24 @@ public class PasswordReset {
 			                 "-fx-border-radius: 5;" +
 			                 "-fx-pref-height: 20;" + 
 			                 "-fx-pref-width: 200;");
+
+		Button cancelButton = new Button("Continue");
+
+		cancelButton.setStyle("-fx-font-size: 14px; " +  
+							"-fx-padding: 10 20; " + 
+							"-fx-border-color: black; " + 
+							"-fx-border-width: 2; " + 
+							"-fx-background-color: white; " + 
+							"-fx-background-radius: 5; " + 
+							"-fx-border-radius: 5;" +
+							"-fx-pref-height: 20;" + 
+							"-fx-pref-width: 200;");
        
         
         loginHolder.getChildren().add(emailTextField);
         loginHolder.getChildren().add(passwordTextField);
         loginHolder.getChildren().add(continueButton);
+		loginHolder.getChildren().add(cancelButton);
         loginHolder.setAlignment(Pos.CENTER);
         
         
@@ -128,6 +141,18 @@ public class PasswordReset {
 		
 		ContinueButtonHandler continueButtonHandler = new ContinueButtonHandler();
 		continueButton.setOnAction(continueButtonHandler);
+
+		class CancelButtonHandler implements EventHandler<ActionEvent>
+		{
+			public void handle(ActionEvent event)
+			{
+				Scene patientAccountSettingsScene = PatientAccountSettingsPage.getPatientAccountSettingsPage(currStage, patient);
+				currStage.setScene(patientAccountSettingsScene);
+			}
+		}
+
+		CancelButtonHandler cancelButtonHandler = new CancelButtonHandler();
+		cancelButton.setOnAction(cancelButtonHandler);
 
 
         Scene passwordResetPage = new Scene(passwordReset, 1150, 700);
