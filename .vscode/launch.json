@@ -10,7 +10,7 @@
             "request": "launch",
             "mainClass": "FrontEnd.oas",
             "projectName": "CSE360_GroupProject_d43ae0f",
-            "vmArgs": "--module-path /Users/rosiegeisler/Downloads/javafx-sdk-21.0.2/lib --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path /Users/pranav/Downloads/javafx-sdk-21.0.1/lib --add-modules javafx.controls,javafx.fxml"
         },
         {
             "type": "java",
@@ -18,7 +18,7 @@
             "request": "launch",
             "mainClass": "FrontEnd.oas",
             "projectName": "CSE360_GroupProject_9f68bc0f",
-            "vmArgs": "--module-path /Users/rosiegeisler/Downloads/javafx-sdk-21.0.2/lib --add-modules javafx.controls,javafx.fxml"
+            "vmArgs": "--module-path /Users/pranav/Downloads/javafx-sdk-21.0.1/lib --add-modules javafx.controls,javafx.fxml"
         }
     ]
 }
