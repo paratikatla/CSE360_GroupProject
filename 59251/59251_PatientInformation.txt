@@ -1,0 +1,17 @@
+Name : Pranav Aratikatla
+Patient ID : 59251
+Password : ashwin572
+Email : paratika@asu.edu
+Phone Number : 6262038629
+Date of Birth : 03/06/2004
+
+Insurance Provider : 12314
+Insurance Provider Phone Number : 4133
+Policy ID : 123123
+
+Pharmacy : 1234343
+Pharmacy Phone Number : 1234343
+Pharmacy Address : wfeowjoe
+
+Unread : false
+Doctor UID : 59251

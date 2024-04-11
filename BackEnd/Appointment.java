@@ -6,20 +6,67 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+
 public class Appointment {
     private Staff doctor;
     private Staff nurse;
     private Patient patient;
     private String date;
-    private String reason;
     private NurseExam nurseExam;
     private DoctorExam docExam;
 
 
-    public Appointment(Patient patient, String date, String reason) {
+    public Staff getDoctor() {
+        return doctor;
+    }
+
+    public void setDoctor(Staff doctor) {
+        this.doctor = doctor;
+    }
+
+    public Staff getNurse() {
+        return nurse;
+    }
+
+    public void setNurse(Staff nurse) {
+        this.nurse = nurse;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public NurseExam getNurseExam() {
+        return nurseExam;
+    }
+
+    public void setNurseExam(NurseExam nurseExam) {
+        this.nurseExam = nurseExam;
+    }
+
+    public DoctorExam getDocExam() {
+        return docExam;
+    }
+
+    public void setDocExam(DoctorExam docExam) {
+        this.docExam = docExam;
+    }
+
+    public Appointment(Patient patient, String date) {
         this.patient = patient;
         this.date = date;
-        this.reason = reason;
         createAppointmentFile();
     }
 
@@ -35,9 +82,6 @@ public class Appointment {
                 else if(line.startsWith(("Date: "))){
                     String date = line.substring(line.indexOf(':') + 2);
                     this.date = date;
-                }else if(line.startsWith(("Reason: "))){
-                    String reason = line.substring(line.indexOf(':') + 2);
-                    this.reason = reason;
                 }else if(line.startsWith(("Doctor: "))){
                     String docName = line.substring(line.indexOf(':') + 2);
                     this.doctor.setFullName(docName);
@@ -50,13 +94,13 @@ public class Appointment {
                     line = reader.readLine();
                     String healthConcerns = line.trim().substring("Health Concerns:".length());
                     line = reader.readLine();
-                    Double weight = Double.parseDouble(line.trim().substring("Weight:".length()));
+                    double weight = Double.parseDouble(line.trim().substring("Weight:".length()));
                     line = reader.readLine();
-                    Double height = Double.parseDouble(line.trim().substring("Height:".length()));
+                    double height = Double.parseDouble(line.trim().substring("Height:".length()));
                     line = reader.readLine();
-                    Double bodyTemp = Double.parseDouble(line.trim().substring("BodyTemp:".length()));
+                    double bodyTemp = Double.parseDouble(line.trim().substring("BodyTemp:".length()));
                     line = reader.readLine();
-                    Double bloodPressure = Double.parseDouble(line.trim().substring("BloodPressure:".length()));
+                    double bloodPressure = Double.parseDouble(line.trim().substring("BloodPressure:".length()));
                     nurseExam = new NurseExam(allergies, healthConcerns, weight, height, bodyTemp, bloodPressure);           
                 }else if(line.startsWith(("NurseExam(Under12): "))){
                     line = reader.readLine();
@@ -95,22 +139,46 @@ public class Appointment {
 
     public void createAppointmentFile(){
         try{
-            String directoryName = "./" ;
-            File directory = new File(directoryName);
-            directory.mkdirs();
+            
+            String patientDirectoryPath = "./" + patient.getUid() + "/";
+            File patientDirectory = new File(patientDirectoryPath);
+            if (!patientDirectory.exists()) {
+                patientDirectory.mkdirs();
+            }
 
-            String fileName = patient.getUid() + date + "_appointMent.txt";
-            File staffFile = new File(directory, fileName);
-            staffFile.createNewFile();
+            String formattedDate = date.replace("/", "_");
 
-            FileWriter writer = new FileWriter(staffFile, false);
+            String patientFilePath = patientDirectoryPath + patient.getUid() + "_" + formattedDate + "_appointMent.txt";
+            File patientFile = new File(patientFilePath);
+
+            try {
+                if (patientFile.createNewFile()) {
+                    System.out.println("File created successfully.");
+                } else {
+                    System.out.println("File already exists.");
+                }
+            } catch (IOException e) {
+                System.err.println("Error creating file: " + e.getMessage());
+                e.printStackTrace();
+            }
+
+            
+
+            FileWriter writer = new FileWriter(patientFile, false);
 
             writer.write("Name: " +  patient.getFullName() + "\n");
             writer.write("Date: " + date + "\n");
-            writer.write("Reason: " + reason + "\n");
             if(!(nurseExam == null)){
                 writer.write("Nurse: " + nurse.getFullName() + "\n");
-                writer.write(nurseExam.toString());
+                if(nurseExam.isU12())
+                {
+                    writer.write(nurseExam.toStringUnderTwelveString());
+                }
+                else
+                {
+                    writer.write(nurseExam.toString());
+                }
+                
             }
             if(!( docExam == null)){
                 writer.write("Doctor: " + doctor.getFullName() + "\n");

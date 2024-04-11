@@ -9,8 +9,9 @@ public class PatientAppointmentHistory {
 
     public PatientAppointmentHistory(String patientID){
         history = new ArrayList<>();
-        File directory = new File("./"); 
-        File[] files = directory.listFiles();
+        String patientDirectoryPath = "./" + patientID + "/";
+        File patientDirectory = new File(patientDirectoryPath);
+        File[] files = patientDirectory.listFiles();
 
         for (File file : files) {
             if (file.isFile() && file.getName().startsWith(patientID) && file.getName().endsWith("_appointment.txt")) {

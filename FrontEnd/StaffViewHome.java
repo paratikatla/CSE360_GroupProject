@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import javafx.event.ActionEvent;
@@ -17,6 +18,7 @@ import javafx.event.EventHandler;
 import BackEnd.Staff;
 import BackEnd.Util;
 import BackEnd.Patient;
+import BackEnd.Appointment;
 
 public class StaffViewHome{
     
@@ -127,24 +129,37 @@ public class StaffViewHome{
             {
                 if(!patientIDLabel.getText().isEmpty())
                 {
+
+                    String patientUID = patientIDLabel.getText().substring(12);
+
+                    LocalDateTime now = LocalDateTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    String formatedDate = now.format(formatter);
+
+                    Appointment appointment = new Appointment(Patient.grabPatient(patientUID), formatedDate);
+
                     if(staff.getRole().equals("Nurse"))
                     {
-                        System.out.print("oeijwd");
-                        String patientUID = patientIDLabel.getText().substring(12);
                         String dob = Patient.getDOBByID(patientUID);
 
                         boolean olderThan12 = Util.isOlderThan12Years(dob);
 
                         if(olderThan12)
                         {
-                            Scene nurseSceneOver12 = NurseViewOver12.getNurseViewOver12Scene(currStage, staff, Patient.grabPatient(patientUID));
+                            Scene nurseSceneOver12 = NurseViewOver12.getNurseViewOver12Scene(currStage, staff, Patient.grabPatient(patientUID), appointment);
                             currStage.setScene(nurseSceneOver12);
                         }
                         else
                         {
-                            Scene nurseSceneUnder12 = NurseViewBelow12.getNurseViewBelow12(stage, staff, Patient.grabPatient(patientUID));
+                            Scene nurseSceneUnder12 = NurseViewBelow12.getNurseViewBelow12(stage, staff, Patient.grabPatient(patientUID), appointment);
                             currStage.setScene(nurseSceneUnder12);
                         }
+                    }
+
+                    if(staff.getRole().equals("Doctor"))
+                    {
+                        Scene doctorAppointmentScene = DoctorView.getDoctorView(currStage, staff, Patient.grabPatient(patientUID), appointment);
+                        currStage.setScene(doctorAppointmentScene);
                     }
                 }
             }

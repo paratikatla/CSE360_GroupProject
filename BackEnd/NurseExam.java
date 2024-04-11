@@ -2,10 +2,19 @@ package BackEnd;
 public class NurseExam {
     private String allergies;
     private String healthConcerns;
-    private Double weight;
-    private Double height;
-    private Double bodyTemp;
-    private Double bloodPressure;
+    private double weight;
+    private double height;
+    private double bodyTemp;
+    private double bloodPressure;
+    private boolean u12;
+
+    public boolean isU12() {
+        return u12;
+    }
+
+    public void setU12(boolean u12) {
+        this.u12 = u12;
+    }
 
     public String getAllergies() {
         return allergies;
@@ -20,44 +29,45 @@ public class NurseExam {
     public void setHealthConcerns(String healthConcerns) {
         this.healthConcerns = healthConcerns;
     }
-    public Double getWeight() {
+    public double getWeight() {
         return weight;
     }
-    public void setWeight(Double weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
-    public Double getHeight() {
+    public double getHeight() {
         return height;
     }
-    public void setHeight(Double height) {
+    public void setHeight(double height) {
         this.height = height;
     }
-    public Double getBodyTemp() {
+    public double getBodyTemp() {
         return bodyTemp;
     }
-    public void setBodyTemp(Double bodyTemp) {
+    public void setBodyTemp(double bodyTemp) {
         this.bodyTemp = bodyTemp;
     }
-    public Double getBloodPressure() {
+    public double getBloodPressure() {
         return bloodPressure;
     }
-    public void setBloodPressure(Double bloodPressure) {
+    public void setBloodPressure(double bloodPressure) {
         this.bloodPressure = bloodPressure;
     }
     
-    public NurseExam(String allergies, String healthConcerns, Double weight, Double height, Double bodyTemp,
-            Double bloodPressure) {
+    public NurseExam(String allergies, String healthConcerns, double weight, double height, double bodyTemp,double bloodPressure) {
         this.allergies = allergies;
         this.healthConcerns = healthConcerns;
         this.weight = weight;
         this.height = height;
         this.bodyTemp = bodyTemp;
         this.bloodPressure = bloodPressure;
+        this.u12 = false;
     }
 
     public NurseExam(String allergies, String healthConcerns) {
         this.allergies = allergies;
         this.healthConcerns = healthConcerns;
+        this.u12 = true;
     }
 
     @Override

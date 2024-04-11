@@ -3,13 +3,13 @@
         "."
     ],
     "java.project.referencedLibraries": [
-        "/Users/pranav/Downloads/javafx-sdk-21.0.1/lib/javafx-swt.jar",
-        "/Users/pranav/Downloads/javafx-sdk-21.0.1/lib/javafx.base.jar",
-        "/Users/pranav/Downloads/javafx-sdk-21.0.1/lib/javafx.controls.jar",
-        "/Users/pranav/Downloads/javafx-sdk-21.0.1/lib/javafx.fxml.jar",
-        "/Users/pranav/Downloads/javafx-sdk-21.0.1/lib/javafx.graphics.jar",
-        "/Users/pranav/Downloads/javafx-sdk-21.0.1/lib/javafx.media.jar",
-        "/Users/pranav/Downloads/javafx-sdk-21.0.1/lib/javafx.swing.jar",
-        "/Users/pranav/Downloads/javafx-sdk-21.0.1/lib/javafx.web.jar"
+        "/Users/rosiegeisler/Downloads/javafx-sdk-21.0.2/lib/javafx-swt.jar",
+        "/Users/rosiegeisler/Downloads/javafx-sdk-21.0.2/lib/javafx.base.jar",
+        "/Users/rosiegeisler/Downloads/javafx-sdk-21.0.2/lib/javafx.controls.jar",
+        "/Users/rosiegeisler/Downloads/javafx-sdk-21.0.2/lib/javafx.fxml.jar",
+        "/Users/rosiegeisler/Downloads/javafx-sdk-21.0.2/lib/javafx.graphics.jar",
+        "/Users/rosiegeisler/Downloads/javafx-sdk-21.0.2/lib/javafx.media.jar",
+        "/Users/rosiegeisler/Downloads/javafx-sdk-21.0.2/lib/javafx.swing.jar",
+        "/Users/rosiegeisler/Downloads/javafx-sdk-21.0.2/lib/javafx.web.jar"
     ]
 }

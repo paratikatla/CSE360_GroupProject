@@ -18,11 +18,11 @@ import BackEnd.Patient;
 import BackEnd.Appointment;
 import BackEnd.NurseExam;
 
-public class NurseViewOver12{
+public class ViewNurseNotes {
 
     private static Stage currStage;
 
-    public static Scene getNurseViewOver12Scene(Stage stage, Staff nurse, Patient patient, Appointment appointment) { 
+    public static Scene getViewNurseNotes(Stage stage, Staff doctor, Appointment appointment) { 
         
         currStage = stage;
 
@@ -38,13 +38,13 @@ public class NurseViewOver12{
 
         HBox top = new HBox(20);
         VBox topLeft = new VBox();
-        Label staffInfo = new Label("Nurse " + nurse.getLastName());
-        Label staffID = new Label(nurse.getEmployeeID());
+        Label staffInfo = new Label("Dr." + doctor.getLastName());
+        Label staffID = new Label(doctor.getEmployeeID());
         topLeft.getChildren().addAll(staffInfo, staffID);
         
         VBox topRight = new VBox();
-        Label patientInfo = new Label(patient.getFullName());
-        Label patientID = new Label("" + patient.getUid());
+        Label patientInfo = new Label(appointment.getPatient().getFullName());
+        Label patientID = new Label("" + appointment.getPatient().getUid());
         topRight.getChildren().addAll(patientInfo, patientID);
         top.getChildren().addAll(topLeft, topRight);
         top.setAlignment(Pos.CENTER_LEFT);
@@ -116,42 +116,48 @@ public class NurseViewOver12{
         healthConcernsInput.setMaxHeight(170);
         body_right_bottom.getChildren().addAll(healthConcernsLabel, healthConcernsInput);
         body_right_bottom.setAlignment(Pos.CENTER);
-        
-        Button submitButton = new Button("Submit");
-        submitButton.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
-        submitButton.setPrefWidth(111);
-        Button viewHistoryButton = new Button("View Patient History");
-        viewHistoryButton.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
 
-        class SubmitButtonHandler implements EventHandler<ActionEvent>
+        weightField.setEditable(false);
+        heightField.setEditable(false);
+        tempField.setEditable(false);
+        bloodpressureField.setEditable(false);
+        allergiesInput.setEditable(false);
+        healthConcernsInput.setEditable(false);
+
+        if(appointment.getNurseExam().isU12())
+        {
+            weightField.setText("N/A");
+            heightField.setText("N/A");
+            tempField.setText("N/A");
+            bloodpressureField.setText("N/A");
+        }
+        else
+        {
+            weightField.setText("" + appointment.getNurseExam().getWeight());
+            heightField.setText("" + appointment.getNurseExam().getHeight());
+            tempField.setText("" + appointment.getNurseExam().getBodyTemp());
+            bloodpressureField.setText("" + appointment.getNurseExam().getBloodPressure());
+        }
+
+        allergiesInput.setText(appointment.getNurseExam().getAllergies());
+        healthConcernsInput.setText(appointment.getNurseExam().getHealthConcerns());
+        
+        Button backButton = new Button("Return");
+        backButton.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
+
+        class BackButtonHandler implements EventHandler<ActionEvent>
         {
             public void handle(ActionEvent e)
             {
-                if(!(weightField.getText().isEmpty()) && !(heightField.getText().isEmpty()) && !(tempField.getText().isEmpty()) && !(bloodpressureField.getText().isEmpty()))
-                {
-                    NurseExam nurseExam = new NurseExam(allergiesInput.getText(), healthConcernsInput.getText(), Double.parseDouble(weightField.getText()), Double.parseDouble(heightField.getText()), Double.parseDouble(tempField.getText()), Double.parseDouble(bloodpressureField.getText()));
-                    appointment.setNurse(nurse, nurseExam);
-
-                    Scene staffHomeView = StaffViewHome.getStaffHomeView(currStage, nurse);
-                    currStage.setScene(staffHomeView);
-                }
+                Scene doctorAppointmentViewScene = DoctorView.getDoctorView(currStage, doctor, appointment.getPatient(), appointment);
+                currStage.setScene(doctorAppointmentViewScene);
             }
         }
 
-        SubmitButtonHandler submitButtonHandler = new SubmitButtonHandler();
-        submitButton.setOnAction(submitButtonHandler);
-        
-        // viewHistoryButton.setOnAction(new EventHandler<ActionEvent>() {
-        //     @Override
-        //     public void handle(ActionEvent event) {
-        //         Stage patientHistoryStage = new Stage();
+        BackButtonHandler backButtonHandler = new BackButtonHandler();
+        backButton.setOnAction(backButtonHandler);
 
-        //         PatientHistoryView patientHistory = new PatientHistoryView();
-        //         patientHistory.start(patientHistoryStage); // Start the second application in a new window
-        //     }
-        // });
-
-        HBox clicks = new HBox(30, submitButton, viewHistoryButton);
+        HBox clicks = new HBox(30, backButton);
         clicks.setAlignment(Pos.CENTER);
         clicks.setPadding(new Insets(0,0,20,0));
         
@@ -168,5 +174,5 @@ public class NurseViewOver12{
         
         return scene;
     }
-
+    
 }

@@ -16,12 +16,14 @@ import javafx.event.EventHandler;
 
 import BackEnd.Staff;
 import BackEnd.Patient;
+import BackEnd.Appointment;
+import BackEnd.NurseExam;
 
 public class NurseViewBelow12{
 
     private static Stage currStage;
 
-    public static Scene getNurseViewBelow12(Stage stage, Staff nurse, Patient patient) {        
+    public static Scene getNurseViewBelow12(Stage stage, Staff nurse, Patient patient, Appointment appointment) {        
         
         currStage = stage;
 
@@ -92,16 +94,30 @@ public class NurseViewBelow12{
         Button submitButton = new Button("Submit");
         submitButton.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
         submitButton.setPrefWidth(111);
+
+        class SubmitButtonHandler implements EventHandler<ActionEvent>
+        {
+            public void handle(ActionEvent e)
+            {
+                    NurseExam nurseExam = new NurseExam(allergiesInput.getText(), healthConcernsInput.getText());
+                    appointment.setNurse(nurse, nurseExam);
+
+                    Scene staffHomeView = StaffViewHome.getStaffHomeView(currStage, nurse);
+                    currStage.setScene(staffHomeView);
+            }
+        }
+
+
         Button viewHistoryButton = new Button("View Patient History");
         viewHistoryButton.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
-        viewHistoryButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Stage patientHistoryStage = new Stage();
-                PatientHistoryView patientHistory = new PatientHistoryView();
-                patientHistory.start(patientHistoryStage);
-            }
-        });
+        // viewHistoryButton.setOnAction(new EventHandler<ActionEvent>() {
+        //     @Override
+        //     public void handle(ActionEvent event) {
+        //         Stage patientHistoryStage = new Stage();
+        //         PatientHistoryView patientHistory = new PatientHistoryView();
+        //         patientHistory.start(patientHistoryStage);
+        //     }
+        // });
         HBox clicks = new HBox(30, submitButton, viewHistoryButton);
         clicks.setPadding(new Insets(0,0,20,0));
         clicks.setAlignment(Pos.CENTER);

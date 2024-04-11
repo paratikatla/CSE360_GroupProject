@@ -3,6 +3,13 @@ package FrontEnd;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import org.w3c.dom.events.Event;
+
+import BackEnd.Appointment;
+import BackEnd.DoctorExam;
+import BackEnd.Patient;
+import BackEnd.Staff;
+import BackEnd.Util;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,10 +20,16 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
-public class DoctorView extends Application {
+public class DoctorView{
 
-    @Override
-    public void start(Stage primaryStage) {
+    private static Stage currStage;
+
+    public static Scene getDoctorView(Stage stage, Staff doctor, Patient patient, Appointment appointment) {
+
+        currStage = stage;
+
+        currStage.setTitle("Doctor Appointment View");
+
         BorderPane borderPane = new BorderPane();
 
         HBox header = new HBox();
@@ -71,6 +84,19 @@ public class DoctorView extends Application {
         
         Button nurseNotes = new Button("View Nurse Notes");
         nurseNotes.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
+
+        class ViewNurseNotesHandler implements EventHandler<ActionEvent>
+        {
+            public void handle(ActionEvent e)
+            {
+                Scene viewNurseNotesScene = ViewNurseNotes.getViewNurseNotes(currStage, doctor, appointment);
+                currStage.setScene(viewNurseNotesScene);
+            }
+        }
+
+        ViewNurseNotesHandler viewNurseNotesHandler = new ViewNurseNotesHandler();
+        nurseNotes.setOnAction(viewNurseNotesHandler);
+
         Button PatientHistory = new Button("View Patient History");
         PatientHistory.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
         PatientHistory.setOnAction(new EventHandler<ActionEvent>() {
@@ -84,6 +110,9 @@ public class DoctorView extends Application {
         });
         HBox clicks = new HBox(20, nurseNotes, PatientHistory);
         clicks.setAlignment(Pos.CENTER);
+
+        Button submitAppointmentDetails = new Button("Submit Appointment Details");
+        submitAppointmentDetails.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
         
         VBox body_left = new VBox(40, note, clicks);
         body_left.setAlignment(Pos.CENTER);
@@ -99,7 +128,7 @@ public class DoctorView extends Application {
         
         Label medication = new Label("Medications");
         medication.setStyle("-fx-font-weight: BOLD; -fx-font-size: 13px");
-        MenuButton list = new MenuButton("Search");
+        MenuButton list = Util.populatePrescriptionMenu();
         VBox first = new VBox(medication, list);
         
         Label quantity = new Label("Quantity");
@@ -118,6 +147,54 @@ public class DoctorView extends Application {
         Button submit = new Button("Submit");
         submit.setStyle("-fx-background-color: #5B9BD5; -fx-text-fill: white;");
         submit.setPrefWidth(111);
+
+        String medList = "";
+        String numMeds = "";
+
+        class SubmitButtonHandler implements EventHandler<ActionEvent>
+        {
+            private String medList;
+            private String numMeds;
+
+            public SubmitButtonHandler(String x, String y)
+            {
+                this.medList = x;
+                this.numMeds = y;
+            }
+
+            public void handle(ActionEvent e)
+            {
+                String medicine = list.getText();
+                String medicineQuantity = quantityField.getText();
+                String signatureText = signatureArea.getText();
+
+
+                if(!medicine.isEmpty() && !signatureText.isEmpty())
+                {
+                    medList = medList + medicine;
+                    numMeds = medicineQuantity + numMeds;
+                }
+
+            }
+        }
+
+        SubmitButtonHandler submitButtonHandler = new SubmitButtonHandler(medList, numMeds);
+        submit.setOnAction(submitButtonHandler);
+
+        class SubmitAppointmentDetailsHandler implements EventHandler<ActionEvent>
+        {
+            public void handle(ActionEvent e)
+            {
+                DoctorExam docExam = new DoctorExam(notes.getText(), medList, numMeds);
+                appointment.setDoctor(doctor, docExam);
+
+                Scene staffHomeView = StaffViewHome.getStaffHomeView(currStage, doctor);
+                currStage.setScene(staffHomeView);
+            }
+        }   
+
+        SubmitAppointmentDetailsHandler submitAppointmentDetailsHandler = new SubmitAppointmentDetailsHandler();
+        submitAppointmentDetails.setOnAction(submitAppointmentDetailsHandler);
         
         VBox body_right = new VBox(20, prescriptionContainer, first, second, third, submit);
         body_right.setAlignment(Pos.CENTER);
@@ -132,12 +209,8 @@ public class DoctorView extends Application {
         borderPane.setCenter(body);
         
         Scene scene = new Scene(borderPane, 1150, 700);
-        primaryStage.setTitle("Hospital Portal");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        
+        return scene;
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
 }
