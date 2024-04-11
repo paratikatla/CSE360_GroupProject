@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.control.Button;
@@ -148,9 +149,12 @@ public class PatientRegistration2 {
 		rightBox.getChildren().add(pharmacyPhone);
 		rightBox.getChildren().add(pharmacyAddress);
 		rightBox.setAlignment(Pos.CENTER);
+
+		Label updateLabel = new Label();
+		updateLabel.setTextFill(Color.BLUE);
 		
 		
-		
+		fieldBox.getChildren().add(updateLabel);
 		fieldBox.getChildren().add(leftBox);
 		fieldBox.getChildren().add(rightBox);
 		fieldBox.setAlignment(Pos.CENTER);
@@ -180,9 +184,18 @@ public class PatientRegistration2 {
 		patientRegistration.setCenter(fieldBox);
 		patientRegistration.setBottom(registerContainer);
 		
+		int counter = 0;
 		
 		class RegisterButtonHandler implements EventHandler<ActionEvent>
 		{
+
+			private static int counter;
+
+			public RegisterButtonHandler(int counter)
+			{
+				this.counter = counter;
+			}
+
 			public void handle(ActionEvent event)
 			{
 				if(!providerField.getText().isEmpty() && !providerPhone.getText().isEmpty() && !policyField.getText().isEmpty() && !pharmacyField.getText().isEmpty() && !pharmacyPhone.getText().isEmpty() && !pharmacyAddress.getText().isEmpty())
@@ -206,15 +219,25 @@ public class PatientRegistration2 {
                         doesUIDExist = Patient.doesPatientExist("" + uid);
                     }
 
-                    Patient.addPatient(uid, firstName, lastName, password, email, phoneNumber, dob, insuranceProvider, providerPhoneNumber, insurancePolicy, pharmacyName, pharmacyPhoneNumber, pharmacyAddr);
+					if(counter == 0)
+					{
+						updateLabel.setText("Your UID is : " + uid + "\n" + "Please press register again");
+						counter += 1;
+					}
+					else
+					{
+						Patient.addPatient(uid, firstName, lastName, password, email, phoneNumber, dob, insuranceProvider, providerPhoneNumber, insurancePolicy, pharmacyName, pharmacyPhoneNumber, pharmacyAddr);
 
-                    Scene patientLoginScene = PatientLoginPage.getPatientLoginPage(currStage);
-                    currStage.setScene(patientLoginScene);
+						Scene patientLoginScene = PatientLoginPage.getPatientLoginPage(currStage);
+						currStage.setScene(patientLoginScene);
+					}
+
+                    
                 }
 			}
 		}
 		
-		RegisterButtonHandler registerHandler = new RegisterButtonHandler();
+		RegisterButtonHandler registerHandler = new RegisterButtonHandler(counter);
 		registerButton.setOnAction(registerHandler);
 
         Scene patientRegistration2 = new Scene(patientRegistration, 1150, 700);
