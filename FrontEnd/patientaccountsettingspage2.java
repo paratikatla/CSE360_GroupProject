@@ -23,28 +23,7 @@ public class patientaccountsettingspage2 extends Application {
     public void start(Stage stage) {
         stage.setTitle("Pediatric OAS - Patient Account Settings");
         
-        
-    	HBox header = new HBox();
-        header.setAlignment(Pos.CENTER);
-        header.setPadding(new Insets(15));
-        header.setSpacing(1);
-        header.setStyle("-fx-background-color: #336699;");
-
-        // Left part of the header - Staff and Patient Information
-        HBox top = new HBox(50);
-        VBox topLeft = new VBox();
-      
-     
-        VBox topRight = new VBox();
-        Label patientInfo = new Label("Patient Name");
-        Label patientID = new Label("Patient ID");
-        topRight.getChildren().addAll(patientInfo, patientID);
-        top.getChildren().addAll(topLeft, topRight);
-        top.setAlignment(Pos.CENTER_LEFT);
-
-        // Center part of the header - Clinic Information
-        Label clinicInfo = new Label("Pediatric OAS");
-        clinicInfo.setAlignment(Pos.CENTER);
+       
         clinicInfo.setStyle("-fx-font-weight: BOLD; -fx-font-size: 20px");
 
         // Right part of the header - Date
