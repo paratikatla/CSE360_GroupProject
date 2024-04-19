@@ -23,82 +23,82 @@ public class Staff {
     int numMessages;
     
 
-    public ObservableList<String> getMessages() {
-        return messages;
-    }
+ //    public ObservableList<String> getMessages() {
+ //        return messages;
+ //    }
 
-    public void setMessages(ObservableList<String> messages) {
-        this.messages = messages;
-    }
+ //    public void setMessages(ObservableList<String> messages) {
+ //        this.messages = messages;
+ //    }
 
-    public int getNumMessages() {
-        return numMessages;
-    }
+ //    public int getNumMessages() {
+ //        return numMessages;
+ //    }
 
-    public void setNumMessages(int numMessages) {
-        this.numMessages = numMessages;
-    }
+ //    public void setNumMessages(int numMessages) {
+ //        this.numMessages = numMessages;
+ //    }
 
-    public String getEmployeeID() {
-        return employeeID;
-    }
+ //    public String getEmployeeID() {
+ //        return employeeID;
+ //    }
 
-    public void setEmployeeID(String employeeID) {
-        this.employeeID = employeeID;
-    }
+ //    public void setEmployeeID(String employeeID) {
+ //        this.employeeID = employeeID;
+ //    }
 
-    public String getRole() {
-        return role;
-    }
+ //    public String getRole() {
+ //        return role;
+ //    }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
+ //    public void setRole(String role) {
+ //        this.role = role;
+ //    }
 
-    public String getFirstName() {
-        return firstName;
-    }
+ //    public String getFirstName() {
+ //        return firstName;
+ //    }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+ //    public void setFirstName(String firstName) {
+ //        this.firstName = firstName;
+ //    }
 
-    public String getLastName() {
-        return lastName;
-    }
+ //    public String getLastName() {
+ //        return lastName;
+ //    }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+ //    public void setLastName(String lastName) {
+ //        this.lastName = lastName;
+ //    }
 
-    public String getDob() {
-        return dob;
-    }
+ //    public String getDob() {
+ //        return dob;
+ //    }
 
-    public void setDob(String dob) {
-        this.dob = dob;
-    }
+ //    public void setDob(String dob) {
+ //        this.dob = dob;
+ //    }
 
-    public String getStaffEmail() {
-        return staffEmail;
-    }
+ //    public String getStaffEmail() {
+ //        return staffEmail;
+ //    }
 
-    public void setStaffEmail(String staffEmail) {
-        this.staffEmail = staffEmail;
-    }
+ //    public void setStaffEmail(String staffEmail) {
+ //        this.staffEmail = staffEmail;
+ //    }
 
-    public String getPassword() {
-        return password;
-    }
+ //    public String getPassword() {
+ //        return password;
+ //    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+ //    public void setPassword(String password) {
+ //        this.password = password;
+ //    }
 
-    public String getFullName()
-	{
-		return firstName + " " + lastName;
-	}
+ //    public String getFullName()
+	// {
+	// 	return firstName + " " + lastName;
+	// }
 
     public void setFullName(String fullName)
 	{
